@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/pages/Login";
-import Register from "./components/pages/Register";
-import Dashboard from "./components/pages/Dashboard";
-import BooksUnderLearnList from "./components/pages/BooksUnderLearnList";
-import ShelfList from "./components/pages/ShelfList";
-import BookList from "./components/pages/BookList";
-import BookCreate from "./components/pages/BookCreate";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import BooksUnderLearnList from "./pages/BooksUnderLearnList";
+import ShelfList from "./pages/ShelfList";
+import BookList from "./pages/BookList";
+import BookCreate from "./pages/BookCreate";
 import React from "react";
-import BookEdit from "./components/pages/BookEdit";
+import BookEdit from "./pages/BookEdit";
 
 const App: React.FC = () => {
   return (
