@@ -1,6 +1,11 @@
+import RegisterFormView from "../components/views/RegisterFormView";
 
 const Register: React.FC = () => {
-    return <div>新規会員登録</div>
+    return (
+        <div className="grid place-items-center h-screen">
+            <RegisterFormView />
+        </div>
+    )
 };
 
 export default Register;
