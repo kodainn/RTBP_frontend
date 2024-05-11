@@ -1,9 +1,9 @@
-import SidebarView from "../components/views/SidebarView";
+import Sidebar from "../components/templates/Sidebar";
 
 const BookCreate: React.FC = () => {
     return (
         <>
-            <SidebarView />
+            <Sidebar />
             <div className="p-4 sm:ml-64">書籍登録</div>
         </>
     );
