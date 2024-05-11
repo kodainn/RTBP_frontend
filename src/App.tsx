@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import BookStudyingList from "./pages/BookStudyingList";
-import ShelfList from "./pages/ShelfList";
+import ShelveList from "./pages/ShelveList";
 import BookList from "./pages/BookList";
 import BookCreate from "./pages/BookCreate";
 import React from "react";
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <Route path={"/login"} element={<Login />} />
         <Route path={"/register"} element={<Register />} />
         <Route path={"/dashboard"} element={<Dashboard />} />
-        <Route path={"/shelves"} element={<ShelfList />} />
+        <Route path={"/shelves"} element={<ShelveList />} />
         <Route path={"/shelve/:id/books"} element={<BookList />} />
         <Route path={"/book/create"} element={<BookCreate />} />
         <Route path={"/book/:id/edit"} element={<BookEdit />} />
