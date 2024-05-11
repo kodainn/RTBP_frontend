@@ -1,10 +1,8 @@
-import RegisterFormView from "../components/views/RegisterFormView";
+import RegisterView from "../components/views/RegisterView";
 
 const Register: React.FC = () => {
     return (
-        <div className="grid place-items-center h-screen">
-            <RegisterFormView />
-        </div>
+        <RegisterView />
     )
 };
 

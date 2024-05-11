@@ -1,10 +1,8 @@
-import LoginFormView from "../components/views/LoginFormView";
+import LoginView from "../components/views/LoginView";
 
 const Login: React.FC = () => {
     return (
-        <div className="grid place-items-center h-screen">
-            <LoginFormView />
-        </div>
+    <LoginView />
     )
 };    
 

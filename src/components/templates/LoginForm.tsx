@@ -1,5 +1,6 @@
 import Button from "../parts/Button";
 import InputText from "../parts/InputText"
+import Label from "../parts/Label";
 import LinkText from "../parts/LinkText";
 
 const LoginForm: React.FC = () => {
@@ -18,14 +19,12 @@ const LoginForm: React.FC = () => {
                     </div>
                 </div>
                 <div className="w-full px-3 mb-6 md:mb-0">
-                    <InputText
-                        name="ユーザー名"
-                        type="text"
-                    />
+                    <Label name="ユーザー名" size="base" />
+                    <InputText/>
                 </div>
                 <div className="w-full px-3 mt-6 mb-6 md:mb-0">
+                    <Label name="パスワード" size="base" />
                     <InputText
-                        name="パスワード"
                         type="password"
                     />
                 </div>

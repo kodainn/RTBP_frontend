@@ -1,9 +1,9 @@
-import SidebarView from "../components/views/SidebarView";
+import Sidebar from "../components/templates/Sidebar";
 
 const BookStudiedHistoryList: React.FC = () => {
     return (
         <>
-            <SidebarView />
+            <Sidebar />
             <div className="p-4 sm:ml-64">学習書籍履歴一覧</div>
         </>
     );
