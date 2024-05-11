@@ -10,7 +10,7 @@ const BookStudyCreate: React.FC = () => {
     return (
         <>
             <SidebarView />
-            <div className="p-4 sm:ml-64">学習書籍履歴一覧{id}</div>
+            <div className="p-4 sm:ml-64">学習書籍作成{id}</div>
         </>
     );
 };

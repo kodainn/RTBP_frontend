@@ -4,9 +4,9 @@ type Props = {
     isWeightFull?: boolean
 };
 
-const Button: React.FC<Props> = ({name, color="gray", isWeightFull = false}) => {
+const Button: React.FC<Props> = ({ name, color = "gray", isWeightFull = false }) => {
     return (
-        <button className={(isWeightFull ? "w-full" : "") + " bg-transparent hover:bg-" + color + "-500 text-" + color + "-700 font-semibold hover:text-white py-3 px-5 border border-" + color + "-500 hover:border-transparent rounded"}>
+        <button className={`${isWeightFull ? "w-full " : ""} bg-transparent text-${color}-700 font-semibold py-3 px-5 border border-${color}-500 rounded hover:bg-${color}-500 hover:text-white hover:border-${color}-700`}>
             {name}
         </button>
     )
