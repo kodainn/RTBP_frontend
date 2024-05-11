@@ -8,7 +8,8 @@ const StudyingBookCard: React.FC = () => {
             <div className="px-6 py-4 flex flex-col justify-center">
                 <div className="font-bold text-xl mb-2">PHPの絵本</div>
                 <p className="text-gray-700 text-base">
-                    5月28日から6月11日
+                    5月28日から<br />
+                    6月11日
                 </p>
                 <div className="mr-2 ml-2 mt-2">
                     <LinkText
