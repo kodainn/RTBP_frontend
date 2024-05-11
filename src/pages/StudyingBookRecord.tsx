@@ -2,17 +2,17 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../components/templates/Sidebar";
 
 type Params = {
-    id: string
+    id: string;
 };
 
-const BookStudiedHistoryShow: React.FC = () => {
+const StudyingBookRecord: React.FC = () => {
     const { id } = useParams<Params>();
     return (
         <>
             <Sidebar />
-            <div className="p-4 sm:ml-64">学習書籍履歴詳細{id}</div>
+            <div className="p-4 sm:ml-64">学習中書籍記録{ id }</div>
         </>
     );
 };
 
-export default BookStudiedHistoryShow;
+export default StudyingBookRecord;

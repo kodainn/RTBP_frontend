@@ -1,6 +1,6 @@
 import Sidebar from "../components/templates/Sidebar";
 
-const BookStudiedHistoryList: React.FC = () => {
+const StudiedBookHistoryList: React.FC = () => {
     return (
         <>
             <Sidebar />
@@ -9,4 +9,4 @@ const BookStudiedHistoryList: React.FC = () => {
     );
 };
 
-export default BookStudiedHistoryList;
+export default StudiedBookHistoryList;
