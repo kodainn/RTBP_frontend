@@ -5,7 +5,7 @@ const StudyingBookStatusCard: React.FC = () => {
         <div className="w-full bg-white rounded-lg overflow-hidden shadow-xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-transparent opacity-50"></div>
             <div className="px-4 py-2">
-                <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-wrap justify-around">
                     <div className="p-4">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">目標達成率</h3>
                         <div className="relative">
