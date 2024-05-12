@@ -2,7 +2,7 @@ import phpBookImage from "../../assets/php.jpg";
 
 const BookDetailCard: React.FC = () => {
     return (
-        <div className="max-w-xl rounded overflow-hidden shadow-lg">
+        <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <div className="flex justify-center">
                 <img className="w-[70%]" src={phpBookImage} alt="本の画像" />
             </div>

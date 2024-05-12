@@ -1,3 +1,4 @@
+import LinkButton from "../parts/LinkButton";
 import LinkPlusCard from "../parts/LinkPlusCard";
 import LinkText from "../parts/LinkText";
 import BookCard from "./BookCard";
@@ -6,7 +7,13 @@ const SheveInBookCard: React.FC = () => {
     return (
         <>
             <div className="flex justify-between mr-12 mb-4">
-                <p className="text-xl">データベース</p>
+                <div className="flex items-center">
+                    <p className="text-xl mr-6">データベース</p>
+                    <LinkButton
+                        link="/shelve/1/edit"
+                        name="棚編集"
+                    />
+                </div>
                 <LinkText
                     link="/shelve/1/books"
                     name="すべて表示する >"

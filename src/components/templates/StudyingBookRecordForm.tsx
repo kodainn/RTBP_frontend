@@ -5,7 +5,7 @@ import Label from "../parts/Label";
 
 const StudyingBookRecordForm: React.FC = () => {
     return (
-        <div className="max-w-xl rounded overflow-hidden shadow-lg">
+        <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <dl className="max-w-md divide-y divide-gray-500 ml-6 mt-6 mb-6">
                 <div className="flex flex-col pb-3">
                     <dt className="mb-1 text-gray-700 md:text-lg">学習期限</dt>
