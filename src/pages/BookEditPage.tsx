@@ -1,13 +1,7 @@
-import { useParams } from "react-router-dom";
 import Sidebar from "../components/templates/Sidebar";
 import BookEditView from "../components/views/BookEditView";
 
-type Params = {
-    id: string;
-};
-
 const BookEdit: React.FC = () => {
-    const  { id }  = useParams<Params>();
     return (
         <>
             <Sidebar />
