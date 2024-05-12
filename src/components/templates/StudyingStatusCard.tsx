@@ -1,4 +1,3 @@
-
 import { BarChart } from "@mui/x-charts";
 
 const StudyingStatusCard: React.FC = () => {

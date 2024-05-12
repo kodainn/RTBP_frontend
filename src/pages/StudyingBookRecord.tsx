@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import Sidebar from "../components/templates/Sidebar";
+import StudyingBookRecordView from "../components/views/StudyingBookRecordView";
 
 type Params = {
     id: string;
@@ -10,7 +11,9 @@ const StudyingBookRecord: React.FC = () => {
     return (
         <>
             <Sidebar />
-            <div className="p-4 sm:ml-64">学習中書籍記録{ id }</div>
+            <div className="p-4 sm:ml-64">
+                <StudyingBookRecordView />
+            </div>
         </>
     );
 };
