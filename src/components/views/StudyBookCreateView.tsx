@@ -10,7 +10,7 @@ const StudyBookCreateView: React.FC = () => {
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-full">
+                <div className="w-full mb-24">
                     <StudyBookFormCard />
                 </div>
             </div>

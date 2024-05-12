@@ -1,10 +1,10 @@
 type Props = {
-    type?: "text" | "password",
+    type?: string,
     placeholder?: string
 
 };
 
-const InputText: React.FC<Props> = ({type = "text", placeholder = ""}) => {
+const InputField: React.FC<Props> = ({type = "text", placeholder = ""}) => {
     return (
         <>
             <input className="appearance-none block w-full text-gray-700 border border-gray-500 rounded py-4 px-5 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type={type} placeholder={placeholder} />
@@ -12,4 +12,4 @@ const InputText: React.FC<Props> = ({type = "text", placeholder = ""}) => {
     )
 };
 
-export default InputText;
+export default InputField;

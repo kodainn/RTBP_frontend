@@ -1,8 +1,8 @@
-import InputText from "../parts/InputText"
+import InputField from "../parts/InputField"
 
 const SearchForm: React.FC = () => {
     return (
-        <InputText placeholder="書籍名で検索" />
+        <InputField placeholder="書籍名で検索" />
     );
 };
 
