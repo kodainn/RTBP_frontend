@@ -1,5 +1,5 @@
 import Button from "../parts/Button"
-import InputText from "../parts/InputText"
+import InputField from "../parts/InputField"
 import Label from "../parts/Label"
 import LinkText from "../parts/LinkText"
 
@@ -12,15 +12,15 @@ const RegisterForm: React.FC = () => {
                 </div>
                 <div className="w-full px-3 mb-6 md:mb-0">
                     <Label name="ユーザー名" size="base" />
-                    <InputText/>
+                    <InputField/>
                 </div>
                 <div className="w-full px-3 mt-6 mb-6 md:mb-0">
                     <Label name="メールアドレス" size="base" />
-                    <InputText/>
+                    <InputField/>
                 </div>
                 <div className="w-full px-3 mt-6 mb-6 md:mb-0">
                     <Label name="パスワード" size="base" />
-                    <InputText
+                    <InputField
                         type="password"
                     />
                 </div>

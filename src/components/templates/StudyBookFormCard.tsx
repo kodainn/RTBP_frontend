@@ -1,6 +1,5 @@
 import Button from "../parts/Button";
-import InputDate from "../parts/InputDate";
-import InputText from "../parts/InputText";
+import InputField from "../parts/InputField";
 import Label from "../parts/Label";
 
 const StudyBookFormCard: React.FC = () => {
@@ -10,12 +9,15 @@ const StudyBookFormCard: React.FC = () => {
                 <div className="font-bold text-2xl mb-2">目標設定</div>
             </div>
             <div className="px-6 pb-2">
-                <InputText placeholder="学習での目標を設定する"/>
+                <InputField placeholder="学習での目標を設定する"/>
                 <Button name="+" />
             </div>
             <div className="px-6 pb-2 pt-6">
                 <Label name="目標達成日" size="base" />
-                <InputDate />
+                <InputField type="date" />
+            </div>
+            <div className="px-6 pb-2 pt-6 mb-8">
+                <Button isWeightFull={true} name="登録" />
             </div>
         </div>
     );
