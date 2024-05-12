@@ -1,5 +1,5 @@
 import LinkText from "../parts/LinkText";
-import ShelveFormCard from "../templates/ShelveFormCard";
+import ShelveEditFormCard from "../templates/ShelveEditFormCard";
 
 const ShelveEditView: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const ShelveEditView: React.FC = () => {
             <div className="max-w-xl mx-auto mt-12">
                 <div className="flex justify-center">
                     <div className="w-full mb-24">
-                        <ShelveFormCard />
+                        <ShelveEditFormCard />
                     </div>
                 </div>
             </div>
