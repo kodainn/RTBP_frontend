@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import Sidebar from "../components/templates/Sidebar";
-
+import BookEditView from "../components/views/BookEditView";
 
 type Params = {
     id: string;
@@ -11,7 +11,9 @@ const BookEdit: React.FC = () => {
     return (
         <>
             <Sidebar />
-            <div className="p-4 sm:ml-64">書籍編集{id}</div>
+            <div className="p-4 sm:ml-64">
+                <BookEditView />
+            </div>
         </>
     );
 };

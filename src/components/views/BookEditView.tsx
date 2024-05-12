@@ -1,8 +1,8 @@
 import LinkText from "../parts/LinkText";
 import BookDetailCard from "../templates/BookDetailCard";
-import StudyBookFormCard from "../templates/StudyBookFormCard";
+import BookFormCard from "../templates/BookFormCard";
 
-const StudyBookCreateView: React.FC = () => {
+const BookEditView: React.FC = () => {
     return (
         <>
             <div className="mt-6">
@@ -12,15 +12,10 @@ const StudyBookCreateView: React.FC = () => {
                     size="base"
                 />
             </div>
-            <div className="max-w-xl mx-auto">
-                <div className="flex justify-center mt-12 mb-12">
-                    <div className="w-full">
-                        <BookDetailCard />
-                    </div>
-                </div>
+            <div className="max-w-xl mx-auto mt-12">
                 <div className="flex justify-center">
                     <div className="w-full mb-24">
-                        <StudyBookFormCard />
+                        <BookFormCard />
                     </div>
                 </div>
             </div>
@@ -28,4 +23,4 @@ const StudyBookCreateView: React.FC = () => {
     );
 };
 
-export default StudyBookCreateView;
+export default BookEditView;
