@@ -1,7 +1,7 @@
 import LinkText from "../parts/LinkText";
 import BookFormCard from "../templates/BookFormCard";
 
-const BookEditView: React.FC = () => {
+const BookCreateView: React.FC = () => {
     return (
         <>
             <div className="mt-6">
@@ -22,4 +22,4 @@ const BookEditView: React.FC = () => {
     );
 };
 
-export default BookEditView;
+export default BookCreateView;
