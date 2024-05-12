@@ -1,5 +1,5 @@
 import LinkText from "../parts/LinkText";
-import BookFormCard from "../templates/BookFormCard";
+import BookCreateFormCard from "../templates/BookCreateFormCard";
 
 const BookCreateView: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const BookCreateView: React.FC = () => {
             <div className="max-w-xl mx-auto mt-12">
                 <div className="flex justify-center">
                     <div className="w-full mb-24">
-                        <BookFormCard />
+                        <BookCreateFormCard />
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import InputTextArea from "../parts/InputTextArea";
 import Label from "../parts/Label";
 import phpBookImage from "../../assets/php.jpg";
 
-const BookFormCard: React.FC = () => {
+const BookEditFormCard: React.FC = () => {
     return (
         <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <div className="px-6 pb-2 mt-8">
@@ -42,4 +42,4 @@ const BookFormCard: React.FC = () => {
     );
 };
 
-export default BookFormCard;
+export default BookEditFormCard;

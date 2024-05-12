@@ -2,7 +2,7 @@ import Button from "../parts/Button";
 import InputField from "../parts/InputField";
 import Label from "../parts/Label";
 
-const StudyBookFormCard: React.FC = () => {
+const StudyBookCreateFormCard: React.FC = () => {
     return (
         <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <div className="px-6 py-4">
@@ -23,4 +23,4 @@ const StudyBookFormCard: React.FC = () => {
     );
 };
 
-export default StudyBookFormCard;
+export default StudyBookCreateFormCard;
