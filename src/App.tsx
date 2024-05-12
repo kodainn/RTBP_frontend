@@ -12,6 +12,8 @@ import StudyBookCreatePage from "./pages/StudyBookCreatePage";
 import StudyingBookRecordPage from "./pages/StudyingBookRecordPage";
 import StudiedBookHistoryListPage from "./pages/StudiedBookHistoryListPage";
 import StudiedBookHistoryShowPage from "./pages/StudiedBookHistoryShowPage";
+import ShelveCreatePage from "./pages/ShelveCreatePage";
+import ShelveEditPage from "./pages/ShelveEditPage";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +25,8 @@ const App: React.FC = () => {
           <Route path={"/dashboard"} element={<DashboardPage />} />
           <Route path={"/shelves"} element={<ShelveListPage />} />
           <Route path={"/shelve/:id/books"} element={<BookListPage />} />
+          <Route path={"/shelve/create"} element={<ShelveCreatePage />} />
+          <Route path={"/shelve/:id/edit"} element={<ShelveEditPage />} />
           <Route path={"/book/create"} element={<BookCreatePage />} />
           <Route path={"/book/:id/edit"} element={<BookEditPage />} />
           <Route path={"/book/:id/study/create"} element={<StudyBookCreatePage />} />

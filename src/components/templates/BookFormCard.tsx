@@ -7,7 +7,7 @@ import phpBookImage from "../../assets/php.jpg";
 
 const BookFormCard: React.FC = () => {
     return (
-        <div className="max-w-xl rounded overflow-hidden shadow-lg">
+        <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <div className="px-6 pb-2 mt-8">
                 <Label name="ISBN" size="base" />
                 <InputField />

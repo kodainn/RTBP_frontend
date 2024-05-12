@@ -4,7 +4,7 @@ import Label from "../parts/Label";
 
 const StudyBookFormCard: React.FC = () => {
     return (
-        <div className="max-w-xl rounded overflow-hidden shadow-lg">
+        <div className="bg-white max-w-xl rounded overflow-hidden shadow-lg">
             <div className="px-6 py-4">
                 <div className="font-bold text-2xl mb-2">目標設定</div>
             </div>
