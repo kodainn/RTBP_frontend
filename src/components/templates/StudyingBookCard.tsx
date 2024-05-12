@@ -14,7 +14,7 @@ const StudyingBookCard: React.FC = () => {
                 <div className="mr-2 ml-2 mt-2">
                     <LinkText
                         link="/studying-books/1/record"
-                        name="記録をつける"
+                        name="記録をつける >"
                         size="lg"
                     />
                 </div>
