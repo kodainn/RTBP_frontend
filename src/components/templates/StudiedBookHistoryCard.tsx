@@ -13,7 +13,7 @@ const StudiedBookHistoryCard: React.FC = () => {
                 <div className="mr-2 ml-2 mt-2">
                     <LinkText
                         link="/studied-history-books/1/show"
-                        name="履歴"
+                        name="履歴を見る >"
                         size="lg"
                     />
                 </div>
