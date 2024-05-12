@@ -1,12 +1,26 @@
 import { BarChart } from "@mui/x-charts";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useLayoutEffect, useState } from "react";
 
 const StudyingStatusCard: React.FC = () => {
 
+    const { windowWidth } = useWindowSize();
+    const [ chartWidth, setChartWidth ] = useState<number>(900);
+
+    useLayoutEffect(() => {
+        if(windowWidth <= 1000) {
+            setChartWidth(300);
+        } else if(windowWidth <= 1200) {
+            setChartWidth(500);
+        } else if(windowWidth <= 1400) {
+            setChartWidth(700);
+        }
+    }, [windowWidth]);
+
     return (
-        <div className="w-full bg-white rounded-lg overflow-hidden shadow-xl relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-transparent opacity-50"></div>
+        <div className="w-full bg-white rounded-lg overflow-hidden shadow-xl">
             <div className="px-4 py-2">
-                <div className="grid grid-cols-4 gap-4">
+                <div className="flex flex-wrap justify-around">
                     <div className="p-4">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">総勉強時間</h3>
                         <div className="relative">
@@ -17,7 +31,7 @@ const StudyingStatusCard: React.FC = () => {
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">学習時間グラフ</h3>
                         <div className="relative">
                             <BarChart
-                                width={900}
+                                width={chartWidth}
                                 height={400}
                                 series={[
                                     { data: [30, 30, 11, 43, 12, 43, 11, 12, 65, 34, 11, 20], label: '第1週', id: '1', stack: 'total' },
