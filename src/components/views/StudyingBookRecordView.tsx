@@ -8,10 +8,10 @@ const StudyingBookRecordView: React.FC = () => {
         <>
             <div className="mt-6">
                 <LinkText
-                        link="/studying-books"
-                        name="< 戻る"
-                        size="base"
-                    />
+                    link="/studying-books"
+                    name="< 戻る"
+                    size="base"
+                />
             </div>
             <div className="max-w-xl mx-auto">
                 <div className="flex justify-center mt-12 mb-12">
@@ -19,7 +19,7 @@ const StudyingBookRecordView: React.FC = () => {
                         <BookDetailCard />
                     </div>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center mb-6 mt-6">
                     <div className="w-full">
                         <StudyingBookRecordForm />
                     </div>

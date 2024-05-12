@@ -11,7 +11,7 @@ const DashboardView: React.FC = () => {
             <div className="mt-24 ml-24 mr-24">
                 <StudyingStatusCard />
             </div>
-            <div className="mt-24 ml-24 mr-24">
+            <div className="mt-24 ml-24 mr-24 mb-24">
                 <BookStatusCard />
             </div>
         </>
