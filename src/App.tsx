@@ -1,35 +1,35 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import StudyingBookList from "./pages/StudyingBookList";
-import ShelveList from "./pages/ShelveList";
-import BookList from "./pages/BookList";
-import BookCreate from "./pages/BookCreate";
 import React from "react";
-import BookEdit from "./pages/BookEdit";
-import StudyBookCreate from "./pages/StudyBookCreate";
-import StudyingBookRecord from "./pages/StudyingBookRecord";
-import StudiedBookHistoryList from "./pages/StudiedBookHistoryList";
-import StudiedBookHistoryShow from "./pages/StudiedBookHistoryShow";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
+import StudyingBookListPage from "./pages/StudyingBookListPage";
+import ShelveListPage from "./pages/ShelveListPage";
+import BookListPage from "./pages/BookListPage";
+import BookCreatePage from "./pages/BookCreatePage";
+import BookEditPage from "./pages/BookEditPage";
+import StudyBookCreatePage from "./pages/StudyBookCreatePage";
+import StudyingBookRecordPage from "./pages/StudyingBookRecordPage";
+import StudiedBookHistoryListPage from "./pages/StudiedBookHistoryListPage";
+import StudiedBookHistoryShowPage from "./pages/StudiedBookHistoryShowPage";
 
 const App: React.FC = () => {
   return (
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route path={"/login"} element={<Login />} />
-          <Route path={"/register"} element={<Register />} />
-          <Route path={"/dashboard"} element={<Dashboard />} />
-          <Route path={"/shelves"} element={<ShelveList />} />
-          <Route path={"/shelve/:id/books"} element={<BookList />} />
-          <Route path={"/book/create"} element={<BookCreate />} />
-          <Route path={"/book/:id/edit"} element={<BookEdit />} />
-          <Route path={"/book/:id/study/create"} element={<StudyBookCreate />} />
-          <Route path={"/studying-books"} element={<StudyingBookList />} />
-          <Route path={"/studying-books/:id/record"} element={<StudyingBookRecord />} />
-          <Route path={"/studied-history-books"} element={<StudiedBookHistoryList />} />
-          <Route path={"/studied-history-books/:id/show"} element={<StudiedBookHistoryShow />} />
+          <Route path={"/login"} element={<LoginPage />} />
+          <Route path={"/register"} element={<RegisterPage />} />
+          <Route path={"/dashboard"} element={<DashboardPage />} />
+          <Route path={"/shelves"} element={<ShelveListPage />} />
+          <Route path={"/shelve/:id/books"} element={<BookListPage />} />
+          <Route path={"/book/create"} element={<BookCreatePage />} />
+          <Route path={"/book/:id/edit"} element={<BookEditPage />} />
+          <Route path={"/book/:id/study/create"} element={<StudyBookCreatePage />} />
+          <Route path={"/studying-books"} element={<StudyingBookListPage />} />
+          <Route path={"/studying-books/:id/record"} element={<StudyingBookRecordPage />} />
+          <Route path={"/studied-history-books"} element={<StudiedBookHistoryListPage />} />
+          <Route path={"/studied-history-books/:id/show"} element={<StudiedBookHistoryShowPage />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
