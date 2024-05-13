@@ -1,24 +1,25 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
-import StudyingBookListPage from "./pages/StudyingBookListPage";
-import ShelveListPage from "./pages/ShelveListPage";
-import BookListPage from "./pages/BookListPage";
-import BookCreatePage from "./pages/BookCreatePage";
-import BookEditPage from "./pages/BookEditPage";
-import StudyBookCreatePage from "./pages/StudyBookCreatePage";
-import StudyingBookRecordPage from "./pages/StudyingBookRecordPage";
-import StudiedBookHistoryListPage from "./pages/StudiedBookHistoryListPage";
-import StudiedBookHistoryShowPage from "./pages/StudiedBookHistoryShowPage";
-import ShelveCreatePage from "./pages/ShelveCreatePage";
-import ShelveEditPage from "./pages/ShelveEditPage";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import LoginPage from "./pages/LoginPage";
+// import RegisterPage from "./pages/RegisterPage";
+// import DashboardPage from "./pages/DashboardPage";
+// import StudyingBookListPage from "./pages/StudyingBookListPage";
+// import ShelveListPage from "./pages/ShelveListPage";
+// import BookListPage from "./pages/BookListPage";
+// import BookCreatePage from "./pages/BookCreatePage";
+// import BookEditPage from "./pages/BookEditPage";
+// import StudyBookCreatePage from "./pages/StudyBookCreatePage";
+// import StudyingBookRecordPage from "./pages/StudyingBookRecordPage";
+// import StudiedBookHistoryListPage from "./pages/StudiedBookHistoryListPage";
+// import StudiedBookHistoryShowPage from "./pages/StudiedBookHistoryShowPage";
+// import ShelveCreatePage from "./pages/ShelveCreatePage";
+// import ShelveEditPage from "./pages/ShelveEditPage";
 
 const App: React.FC = () => {
   return (
     <React.StrictMode>
-      <BrowserRouter>
+      <h1>テスト</h1>
+      {/* <BrowserRouter>
         <Routes>
           <Route path={"/login"} element={<LoginPage />} />
           <Route path={"/register"} element={<RegisterPage />} />
@@ -35,7 +36,7 @@ const App: React.FC = () => {
           <Route path={"/studied-history-books"} element={<StudiedBookHistoryListPage />} />
           <Route path={"/studied-history-books/:id/show"} element={<StudiedBookHistoryShowPage />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </React.StrictMode>
   )
 }
