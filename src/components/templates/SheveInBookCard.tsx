@@ -23,7 +23,7 @@ const SheveInBookCard: React.FC = () => {
             <div className="overflow-x-auto">
                 <div className="flex">
                     <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <LinkPlusCard link="/book/create" />
+                        <LinkPlusCard link="/books/create" />
                     </div>
                     <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
                         <BookCard />
