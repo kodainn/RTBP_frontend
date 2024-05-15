@@ -9,7 +9,7 @@ const SheveListView: React.FC = () => {
                 <SearchForm />
             </div>
             <div className="mr-12 mt-16">
-                <LinkButton link="/shelve/create" name="棚作成" />
+                <LinkButton link="/shelves/create" name="棚作成" />
             </div>
             <div className="mt-16 mb-16">
                 <SheveInBookCard />
