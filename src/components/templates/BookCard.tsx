@@ -9,14 +9,14 @@ const BookCard: React.FC = () => {
                 <div className="font-bold text-xl mb-2">PHPの絵本</div>
                 <div className="ml-2 mt-2">
                     <LinkText
-                        link="/book/1/edit"
+                        link="/books/1/edit"
                         name="編集する >"
                         size="lg"
                     />
                 </div>
                 <div className="ml-2 mt-2">
                     <LinkText
-                        link="/book/1/study/create"
+                        link="/books/1/studies/create"
                         name="学習登録する >"
                         size="lg"
                     />

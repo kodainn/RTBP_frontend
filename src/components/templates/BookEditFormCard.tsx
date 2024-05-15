@@ -17,12 +17,8 @@ const BookEditFormCard: React.FC = () => {
                 <InputField />
             </div>
             <div className="px-6 pb-2">
-                <Label name="ジャンル" size="base" />
+                <Label name="棚名" size="base" />
                 <InputField />
-            </div>
-            <div className="px-6 pb-2">
-                <Label name="備考" size="base" />
-                <InputTextArea />
             </div>
             <div className="px-6 pb-2">
                 <Label name="備考" size="base" />

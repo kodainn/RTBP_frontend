@@ -24,12 +24,12 @@ const App: React.FC = () => {
           <Route path={"/register"} element={<RegisterPage />} />
           <Route path={"/dashboard"} element={<DashboardPage />} />
           <Route path={"/shelves"} element={<ShelveListPage />} />
-          <Route path={"/shelve/:id/books"} element={<BookListPage />} />
-          <Route path={"/shelve/create"} element={<ShelveCreatePage />} />
-          <Route path={"/shelve/:id/edit"} element={<ShelveEditPage />} />
-          <Route path={"/book/create"} element={<BookCreatePage />} />
-          <Route path={"/book/:id/edit"} element={<BookEditPage />} />
-          <Route path={"/book/:id/study/create"} element={<StudyBookCreatePage />} />
+          <Route path={"/shelves/:id/books"} element={<BookListPage />} />
+          <Route path={"/shelves/create"} element={<ShelveCreatePage />} />
+          <Route path={"/shelves/:id/edit"} element={<ShelveEditPage />} />
+          <Route path={"/books/create"} element={<BookCreatePage />} />
+          <Route path={"/books/:id/edit"} element={<BookEditPage />} />
+          <Route path={"/books/:id/studies/create"} element={<StudyBookCreatePage />} />
           <Route path={"/studying-books"} element={<StudyingBookListPage />} />
           <Route path={"/studying-books/:id/record"} element={<StudyingBookRecordPage />} />
           <Route path={"/studied-history-books"} element={<StudiedBookHistoryListPage />} />

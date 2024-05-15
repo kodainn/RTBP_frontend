@@ -10,12 +10,12 @@ const SheveInBookCard: React.FC = () => {
                 <div className="flex items-center">
                     <p className="text-xl mr-6">データベース</p>
                     <LinkButton
-                        link="/shelve/1/edit"
+                        link="/shelves/1/edit"
                         name="棚編集"
                     />
                 </div>
                 <LinkText
-                    link="/shelve/1/books"
+                    link="/shelves/1/books"
                     name="すべて表示する >"
                     size="base"
                 />
