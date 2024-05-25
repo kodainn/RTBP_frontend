@@ -13,16 +13,15 @@ const BookCreateFormCard: React.FC = () => {
                 <InputField />
             </div>
             <div className="px-6 pb-2">
+                <Button name="ISBNで検索" />
+            </div>
+            <div className="px-6 pb-2">
                 <Label name="タイトル" size="base" />
                 <InputField />
             </div>
             <div className="px-6 pb-2">
                 <Label name="ジャンル" size="base" />
                 <InputField />
-            </div>
-            <div className="px-6 pb-2">
-                <Label name="備考" size="base" />
-                <InputTextArea />
             </div>
             <div className="px-6 pb-2">
                 <Label name="備考" size="base" />

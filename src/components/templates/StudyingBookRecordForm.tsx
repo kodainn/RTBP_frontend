@@ -2,6 +2,7 @@ import Button from "../parts/Button";
 import CheckBox from "../parts/CheckBox";
 import InputField from "../parts/InputField";
 import Label from "../parts/Label";
+import InputTextArea from "../parts/InputTextArea";
 
 const StudyingBookRecordForm: React.FC = () => {
     return (
@@ -36,6 +37,12 @@ const StudyingBookRecordForm: React.FC = () => {
                     <dt className="mb-1 text-gray-500 md:text-lg">勉強時間</dt>
                     <dd className="text-lg font-semibold">
                         <InputField type="time" />
+                    </dd>
+                </div>
+                <div className="flex flex-col pt-3">
+                    <dt className="mb-1 text-gray-500 md:text-lg">メモ</dt>
+                    <dd className="text-lg font-semibold">
+                        <InputTextArea />
                     </dd>
                 </div>
                 <div className="px-6 pb-2 pt-6 mb-8">

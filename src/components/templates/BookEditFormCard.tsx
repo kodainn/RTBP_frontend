@@ -13,6 +13,9 @@ const BookEditFormCard: React.FC = () => {
                 <InputField />
             </div>
             <div className="px-6 pb-2">
+                <Button name="ISBNで検索" />
+            </div>
+            <div className="px-6 pb-2">
                 <Label name="タイトル" size="base" />
                 <InputField />
             </div>
