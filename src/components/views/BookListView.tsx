@@ -5,7 +5,6 @@ import axios, { AxiosResponse } from "axios";
 
 import LinkText from "../parts/LinkText";
 import BookCard from "../templates/BookCard";
-import { isNumber } from "../../utils/numberCheck";
 
 
 type shelvesIdBooksResponse = {
@@ -32,16 +31,15 @@ const fetchSlevesIdBooksResponse = (id: string | undefined): shelvesIdBooksRespo
                 }
             })
             .catch((error: any) => {
+                if(error.response?.status === 422) {
+                    navigate("/shelves");
+                }
                 if(error.response?.status === 404) {
                     navigate("/shelves");
                 };
             });
         }
-        if (!isNumber(id)) {
-            navigate("/shelves");
-        } else {
-            fetchData();
-        }
+        fetchData();
     }, [])
 
     return data;
@@ -49,7 +47,7 @@ const fetchSlevesIdBooksResponse = (id: string | undefined): shelvesIdBooksRespo
 
 
 const BookListView: React.FC = () => {
-    let { id } = useParams();
+    const { id } = useParams();
     const shelvesIdBooks = fetchSlevesIdBooksResponse(id);
 
     if(shelvesIdBooks === null) {

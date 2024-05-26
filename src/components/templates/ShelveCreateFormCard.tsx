@@ -62,7 +62,7 @@ const ShelveCreateFormCard: React.FC = () => {
             <div className="px-6 pb-2 mt-8">
                 <Label name="棚名" size="base" />
                 <InputField
-                    onChange={changeNameInput}
+                    onChange={changeNameInput} value={nameInput}
                 />
                 <ValidateText message={nameValidateMessage} />
             </div>
