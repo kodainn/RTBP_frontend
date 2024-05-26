@@ -1,25 +1,58 @@
+import { useEffect, useState } from "react";
 import StudyingBookCard from "../templates/StudyingBookCard";
+import axios from "axios";
+
+type StudyingBooksResponse = {
+    studying_books: {
+        id:        number,
+        title:     string,
+        img_url:   string,
+        start_on:  Date,
+        target_on: Date
+    }[];
+};
+
+
+const fetchStudyingBooks = () => {
+    const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
+    useEffect(() => {
+        const fetchData = async() => {
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/studying-books");
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        };
+        fetchData();
+    }, []);
+
+    return data;
+}
 
 const StudyingBookListView: React.FC = () => {
+
+    const studyingBooks = fetchStudyingBooks();
+
+    if(studyingBooks === null) {
+        return <div>loading...</div>;
+    }
 
     return (
         <div className="mt-24">
             <div className="flex flex-wrap">
-                <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
-                    <StudyingBookCard />
-                </div>
-                <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
-                    <StudyingBookCard />
-                </div>
-                <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
-                    <StudyingBookCard />
-                </div>
-                <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
-                    <StudyingBookCard />
-                </div>
-                <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
-                    <StudyingBookCard />
-                </div>
+                {studyingBooks && studyingBooks["studying_books"].length === 0 && <div>学習書籍が登録されていません。</div>}
+                {studyingBooks && studyingBooks["studying_books"].map((studyingBook) => {
+                    return (
+                        <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
+                            <StudyingBookCard
+                                id={studyingBook.id}
+                                title={studyingBook.title}
+                                imgUrl={studyingBook.img_url}
+                                startOn={studyingBook.start_on}
+                                targetOn={studyingBook.target_on}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

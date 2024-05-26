@@ -38,7 +38,7 @@ const SheveInBookCard: React.FC<Props> = ({ id, name, books }) => {
                     </div>
                     {books.map((book) => {
                         return (
-                            <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
+                            <div key={book.id} className="flex-shrink-0 max-w-xs mr-12 mb-6">
                                 <BookCard
                                     id={book.id}
                                     title={book.title}

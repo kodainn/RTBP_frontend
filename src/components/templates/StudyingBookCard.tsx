@@ -1,19 +1,29 @@
 import LinkText from "../parts/LinkText"
-import phpBookImage from "../../assets/php.jpg";
+import { format } from "date-fns";
 
-const StudyingBookCard: React.FC = () => {
+
+type Props = {
+    id:        number,
+    title:     string,
+    imgUrl:   string,
+    startOn:  Date,
+    targetOn: Date
+}
+
+
+const StudyingBookCard: React.FC<Props> = ({ id, title, imgUrl, startOn, targetOn }) => {
     return (
         <div className="bg-white rounded overflow-hidden shadow-lg flex">
-            <img className="w-1/2 h-48" src={phpBookImage} alt="bookImage" />
+            <img className="w-1/2 h-48" src={imgUrl} alt="bookImage" />
             <div className="px-6 py-4 flex flex-col justify-center">
-                <div className="font-bold text-xl mb-2">PHPの絵本</div>
+                <div className="font-bold text-xl mb-2">{title}</div>
                 <p className="text-gray-700 text-base">
-                    5月28日から<br />
-                    6月11日
+                    {format(startOn, "MM月dd日")}から<br />
+                    {format(targetOn, "MM月dd日")}
                 </p>
                 <div className="mr-2 ml-2 mt-2">
                     <LinkText
-                        link="/studying-books/1/record"
+                        link={"/studying-books/" + id + "/record"}
                         name="記録をつける >"
                         size="lg"
                     />
