@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import LinkText from "../parts/LinkText";
 import BookCard from "../templates/BookCard";
@@ -26,13 +26,13 @@ const fetchSlevesIdBooksResponse = (id: string | undefined): shelvesIdBooksRespo
     useEffect(() => {
         const fetchData = async() => {
             await axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id + "/books")
-            .then((res) => {
+            .then((res: AxiosResponse) => {
                 if(res.status === 200) {
                     setData(res.data);
                 }
             })
-            .catch((error) => {
-                if(error.response.status === 404) {
+            .catch((error: any) => {
+                if(error.response?.status === 404) {
                     navigate("/shelves");
                 };
             });
