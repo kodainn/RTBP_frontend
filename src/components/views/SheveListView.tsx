@@ -16,38 +16,46 @@ type ShelveResponse = {
     }[];
 };
 
-const fetchShelve = (): ShelveResponse | null => {
+const fetchShelve = (searchTitle: string): ShelveResponse | null => {
     const [ data, setData ] = useState(null);
     useEffect(() => {
+        setData(null);
         const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/shelves");
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/shelves?title=" + searchTitle);
             if(res.status === 200) {
                 setData(res.data);
             }
         }
         fetchData();
-    }, []);
+    }, [searchTitle]);
 
     return data;
 }
 
 
 const SheveListView: React.FC = () => {
-    const shelves = fetchShelve();
 
-    if(shelves === null) {
-        return <div>loading...</div>;
+    const [searchTitle, setSearchTitle] = useState<string>("");
+
+    const changeSearchTitle = (searchTitle: string) => {
+        setSearchTitle(searchTitle);
     }
+
+    const shelves = fetchShelve(searchTitle);
 
     return (
         <>
             <div className="mr-12">
-                <SearchForm />
+                <SearchForm
+                    changeSearchTitle={changeSearchTitle}
+                />
             </div>
             <div className="mr-12 mt-16">
                 <LinkButton link="/shelves/create" name="棚作成" />
             </div>
-            {shelves["shelves"].map((shelve) => {
+            {shelves === null ? 
+                (<div className="mt-16 mb-16">loading...</div>) :
+                shelves["shelves"].map((shelve) => {
                 return (
                     <div className="mt-16 mb-16">
                         <SheveInBookCard
