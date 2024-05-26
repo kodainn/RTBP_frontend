@@ -3,19 +3,30 @@ import LinkPlusCard from "../parts/LinkPlusCard";
 import LinkText from "../parts/LinkText";
 import BookCard from "./BookCard";
 
-const SheveInBookCard: React.FC = () => {
+type Props = {
+    id:   number,
+    name: string,
+    books: {
+        id:      number,
+        title:   string,
+        img_url: string
+    }[]
+}
+
+
+const SheveInBookCard: React.FC<Props> = ({ id, name, books }) => {
     return (
         <>
             <div className="flex justify-between mr-12 mb-4">
                 <div className="flex items-center">
-                    <p className="text-xl mr-6">データベース</p>
+                    <p className="text-xl mr-6">{name}</p>
                     <LinkButton
-                        link="/shelves/1/edit"
+                        link={"/shelves/" + id + "/edit"}
                         name="棚編集"
                     />
                 </div>
                 <LinkText
-                    link="/shelves/1/books"
+                    link={"/shelves/" + id + "/books"}
                     name="すべて表示する >"
                     size="base"
                 />
@@ -23,29 +34,19 @@ const SheveInBookCard: React.FC = () => {
             <div className="overflow-x-auto">
                 <div className="flex">
                     <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <LinkPlusCard link="/books/create" />
+                        <LinkPlusCard link={"/shelves/" + id + "/books/create"} />
                     </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
-                    <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
-                        <BookCard />
-                    </div>
+                    {books.map((book) => {
+                        return (
+                            <div className="flex-shrink-0 max-w-xs mr-12 mb-6">
+                                <BookCard
+                                    id={book.id}
+                                    title={book.title}
+                                    imgUrl={book.img_url}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </>
