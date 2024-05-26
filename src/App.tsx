@@ -27,8 +27,8 @@ const App: React.FC = () => {
           <Route path={"/shelves/:id/books"} element={<BookListPage />} />
           <Route path={"/shelves/create"} element={<ShelveCreatePage />} />
           <Route path={"/shelves/:id/edit"} element={<ShelveEditPage />} />
-          <Route path={"/books/create"} element={<BookCreatePage />} />
-          <Route path={"/books/:id/edit"} element={<BookEditPage />} />
+          <Route path={"/shelves/:id/books/create"} element={<BookCreatePage />} />
+          <Route path={"/shelves/:shelve_id/books/:book_id/edit"} element={<BookEditPage />} />
           <Route path={"/books/:id/studies/create"} element={<StudyBookCreatePage />} />
           <Route path={"/studying-books"} element={<StudyingBookListPage />} />
           <Route path={"/studying-books/:id/record"} element={<StudyingBookRecordPage />} />

@@ -29,13 +29,15 @@ type BookCountsResponse = {
     }[]
 };
 
-const fetchStudyingBookStatus = () => {
+const fetchStudyBookProgress = (): StudyBookProgressResponse | null => {
     const [ data, setData ] = useState<StudyBookProgressResponse | null>(null);
 
     useEffect(() => {
         const fetchData = async() => {
             const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-book-progress");
-            setData(res.data);
+            if(res.status === 200) {
+                setData(res.data);
+            }
         }
         fetchData()
     }, [])
@@ -44,25 +46,33 @@ const fetchStudyingBookStatus = () => {
 }
 
 
-const fetchStudyingStatus = () => {
+const fetchStudyTimes = (): StudyTimesResponse | null => {
     const [ data, setData ] = useState<StudyTimesResponse | null>(null);
-    const fetchData = async() => {
-        const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-times");
-        setData(res.data);
-    }
-    fetchData();
+    useEffect(() => {
+        const fetchData = async() => {
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-times");
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        }
+        fetchData();
+    }, []);
 
     return data;
 }
 
 
-const fetchBookCounts = () => {
+const fetchBookCounts = (): BookCountsResponse | null => {
     const [ data, setData ] = useState<BookCountsResponse | null>(null);
-    const fetchData = async() => {
-        const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/book-counts");
-        setData(res.data);
-    }
-    fetchData();
+    useEffect(() => {
+        const fetchData = async() => {
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/book-counts");
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        }
+        fetchData();
+    }, []);
 
     return data;
 }
@@ -70,12 +80,12 @@ const fetchBookCounts = () => {
 
 const DashboardView: React.FC = () => {
 
-    const studyingBookStatus = fetchStudyingBookStatus();
-    const studyingStatus = fetchStudyingStatus();
-    const bookCounts = fetchBookCounts();
+    const StudyBookProgress = fetchStudyBookProgress();
+    const StudyTimes = fetchStudyTimes();
+    const BookCounts = fetchBookCounts();
 
 
-    if(studyingBookStatus === null || studyingStatus === null || bookCounts === null) {
+    if(StudyBookProgress === null || StudyTimes === null || BookCounts === null) {
         return <div>Loading...</div>;
     }
 
@@ -83,22 +93,22 @@ const DashboardView: React.FC = () => {
         <>
             <div className="mt-24 ml-24 mr-24">
                 <StudyingBookStatusCard
-                    studyBooksCompletedCount={studyingBookStatus.study_books_completed_count}
-                    studyBooksIncompleteCount={studyingBookStatus.study_books_incomplete_count}
-                    startStudyPeriodOn={studyingBookStatus.start_study_period_on}
-                    endStudyPeriodOn={studyingBookStatus.end_study_period_on}
+                    studyBooksCompletedCount={StudyBookProgress.study_books_completed_count}
+                    studyBooksIncompleteCount={StudyBookProgress.study_books_incomplete_count}
+                    startStudyPeriodOn={StudyBookProgress.start_study_period_on}
+                    endStudyPeriodOn={StudyBookProgress.end_study_period_on}
                 />
             </div>
             <div className="mt-24 ml-24 mr-24">
                 <StudyingStatusCard
-                    studyMinutesTotal={studyingStatus.study_minutes_total}
-                    studyMinutesByMonthly={studyingStatus.study_minutes_by_monthly}
+                    studyMinutesTotal={StudyTimes.study_minutes_total}
+                    studyMinutesByMonthly={StudyTimes.study_minutes_by_monthly}
                 />
             </div>
             <div className="mt-24 ml-24 mr-24 mb-24">
                 <BookStatusCard
-                    bookTotalCount={bookCounts.book_total_count}
-                    bookCountByShelve={bookCounts.book_count_by_shelve}
+                    bookTotalCount={BookCounts.book_total_count}
+                    bookCountByShelve={BookCounts.book_count_by_shelve}
                 />
             </div>
         </>
