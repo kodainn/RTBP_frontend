@@ -54,7 +54,7 @@ const SheveListView: React.FC = () => {
                 <LinkButton link="/shelves/create" name="棚作成" />
             </div>
             {shelves === null && <div className="mt-16 mb-16">loading...</div>}
-            {shelves && shelves["shelves"].length === 0 && <div className="mt-16 mb-16">本棚の情報がありません。</div>}
+            {shelves && shelves["shelves"].length === 0 && <div className="mt-16 mb-16">本棚情報がありません。</div>}
             {shelves && shelves["shelves"].map((shelve) => {
                 return (
                     <div key={shelve.id} className="mt-16 mb-16">

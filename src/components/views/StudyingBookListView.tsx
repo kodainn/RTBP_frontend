@@ -36,13 +36,16 @@ const StudyingBookListView: React.FC = () => {
         return <div>loading...</div>;
     }
 
+    if(studyingBooks["studying_books"].length === 0) {
+        return <div>学習書籍情報がありません。</div>;
+    }
+
     return (
         <div className="mt-24">
             <div className="flex flex-wrap">
-                {studyingBooks && studyingBooks["studying_books"].length === 0 && <div>学習書籍が登録されていません。</div>}
-                {studyingBooks && studyingBooks["studying_books"].map((studyingBook) => {
+                {studyingBooks["studying_books"].map((studyingBook) => {
                     return (
-                        <div className="w-full sm:w-1/2 xl:w-1/3 p-4">
+                        <div key={studyingBook.id} className="w-full sm:w-1/2 xl:w-1/3 p-4">
                             <StudyingBookCard
                                 id={studyingBook.id}
                                 title={studyingBook.title}
