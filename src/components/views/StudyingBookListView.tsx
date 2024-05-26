@@ -13,7 +13,7 @@ type StudyingBooksResponse = {
 };
 
 
-const fetchStudyingBooks = () => {
+const fetchStudyingBooks = (): StudyingBooksResponse | null => {
     const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
     useEffect(() => {
         const fetchData = async() => {

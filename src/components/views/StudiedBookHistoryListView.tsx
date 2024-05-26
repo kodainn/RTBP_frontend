@@ -11,7 +11,7 @@ type StudiedBooksHistoryResponse = {
     }[]
 };
 
-const fetchStudiedBooksHistory = () => {
+const fetchStudiedBooksHistory = (): StudiedBooksHistoryResponse | null => {
     const [ data ,setData ] = useState<StudiedBooksHistoryResponse | null>(null);
     useEffect(() => {
         const fetchData = async() => {
