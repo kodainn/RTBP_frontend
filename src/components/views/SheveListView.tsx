@@ -3,6 +3,9 @@ import LinkButton from "../parts/LinkButton";
 import SearchForm from "../templates/SearchForm";
 import SheveInBookCard from "../templates/SheveInBookCard";
 import axios from "axios";
+import SuccessAlertMessage from "../parts/SuccessAlertMessage";
+import FaildAlertMessage from "../parts/FaildAlertMessage";
+import { useLocation } from "react-router-dom";
 
 type ShelveResponse = {
     shelves: {
@@ -43,12 +46,18 @@ const SheveListView: React.FC = () => {
 
     const shelves = fetchShelve(searchTitle);
 
+    const shelveCreateOrEdit = useLocation().state;
+
     return (
         <>
             <div className="mr-12">
                 <SearchForm
                     changeSearchTitle={changeSearchTitle}
                 />
+            </div>
+            <div className="w-[60%]">
+                {shelveCreateOrEdit !== null && shelveCreateOrEdit.type === "success" && <SuccessAlertMessage message={shelveCreateOrEdit.message} />}
+                {shelveCreateOrEdit !== null && shelveCreateOrEdit.type === "faild" && <FaildAlertMessage message={shelveCreateOrEdit.message} />}
             </div>
             <div className="mr-12 mt-16">
                 <LinkButton link="/shelves/create" name="棚作成" />
