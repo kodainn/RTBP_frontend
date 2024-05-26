@@ -39,7 +39,7 @@ const fetchStudyBookProgress = (): StudyBookProgressResponse | null => {
                 setData(res.data);
             }
         }
-        fetchData()
+        fetchData();
     }, [])
 
     return data;
