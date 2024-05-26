@@ -1,6 +1,31 @@
 import { PieChart } from "@mui/x-charts";
 
-const BookStatusCard: React.FC = () => {
+type Props = {
+    bookTotalCount: number,
+    bookCountByShelve: {
+        shelve_name: string,
+        book_count:  number
+    }[]
+}
+
+const conversionToPieChartData = (bookCountShelve: {shelve_name: string, book_count: number}[]) => {
+    let data: any[]= [];
+    for(let index = 0; index < bookCountShelve.length; index++) {
+        data.push({
+            id:    index,
+            value: bookCountShelve[index].book_count,
+            label: bookCountShelve[index].shelve_name
+        });
+    }
+
+    return data;
+}
+
+
+const BookStatusCard: React.FC<Props> = ({ bookTotalCount, bookCountByShelve }) => {
+
+    const pieChartData = conversionToPieChartData(bookCountByShelve);
+
     return (
         <div className="w-full bg-white rounded-lg overflow-hidden shadow-xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-transparent opacity-50"></div>
@@ -9,27 +34,23 @@ const BookStatusCard: React.FC = () => {
                     <div className="p-4">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">総書籍登録数</h3>
                         <div className="relative">
-                            <h4 className="text-xl">30冊</h4>
+                            <h4 className="text-xl">{bookTotalCount}冊</h4>
                         </div>
                     </div>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">棚別書籍登録数</h3>
                         <div className="relative">
-                        <PieChart
-                                series={[
-                                    {
-                                        data: [
-                                            { id: 0, value: 8, label: 'データベース' },
-                                            { id: 1, value: 11, label: 'ネットワーク' },
-                                            { id: 2, value: 4, label: 'アルゴリズム' },
-                                            { id: 3, value: 2, label: 'web開発概要' },
-                                            { id: 4, value: 5, label: 'システム設計' },
-                                        ],
-                                    },
-                                ]}
-                                width={400}
-                                height={200}
-                            />
+                            {bookCountByShelve.length === 0 ? (
+                                <div className="text-xl">書籍が登録されていません。</div>
+                            ) : (
+                                <PieChart
+                                    series={[
+                                        {data: pieChartData},
+                                    ]}
+                                    width={400}
+                                    height={200}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
