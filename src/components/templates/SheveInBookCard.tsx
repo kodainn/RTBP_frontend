@@ -2,6 +2,7 @@ import LinkButton from "../parts/LinkButton";
 import LinkPlusCard from "../parts/LinkPlusCard";
 import LinkText from "../parts/LinkText";
 import BookCard from "./BookCard";
+import defaultBookImage from "../../assets/default_book.png";
 
 type Props = {
     id:   number,
@@ -42,7 +43,7 @@ const SheveInBookCard: React.FC<Props> = ({ id, name, books }) => {
                                 <BookCard
                                     id={book.id}
                                     title={book.title}
-                                    imgUrl={book.img_url}
+                                    imgUrl={book.img_url ? book.img_url : defaultBookImage}
                                 />
                             </div>
                         );
