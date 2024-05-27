@@ -59,7 +59,7 @@ const BookCreateFormCard: React.FC<Props> = ({ id, name }) => {
         console.log(reqBody);
 
         axios.post(import.meta.env.VITE_API_URL + "/books", reqBody)
-        .then((res: AxiosResponse) => {
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 navigate("/shelves", {state: {message: "書籍の追加に成功しました。", type: "success"}});
             }
@@ -109,7 +109,7 @@ const BookCreateFormCard: React.FC<Props> = ({ id, name }) => {
                 <ValidateText message={titleValidateMessage} />
             </div>
             <div className="px-6 pb-2">
-                <Label name="ジャンル" size="base" />
+                <Label name="棚名" size="base" />
                 <p className="text-2xl">{name}</p>
             </div>
             <div className="px-6 pb-2">

@@ -15,7 +15,7 @@ const BookCard: React.FC<Props> = ({ id, title, imgUrl }) => {
                 <div className="font-bold text-xl mb-2">{title}</div>
                 <div className="ml-2 mt-2">
                     <LinkText
-                        link={"/books/" + id + "/edit"}
+                        link={"/shelves/books/" + id + "/edit"}
                         name="編集する >"
                         size="lg"
                     />

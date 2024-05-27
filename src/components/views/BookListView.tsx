@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from "axios";
 
 import LinkText from "../parts/LinkText";
 import BookCard from "../templates/BookCard";
+import defaultBookImage from "../../assets/default_book.png";
 
 
 type shelvesIdBooksResponse = {
@@ -72,7 +73,7 @@ const BookListView: React.FC = () => {
                                 <BookCard
                                     id={book.id}
                                     title={book.title}
-                                    imgUrl={book.img_url}
+                                    imgUrl={book.img_url ? book.img_url : defaultBookImage}
                                 />
                             </div>
                         );
