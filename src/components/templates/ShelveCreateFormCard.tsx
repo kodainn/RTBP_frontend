@@ -51,6 +51,9 @@ const ShelveCreateFormCard: React.FC = () => {
             if(error.response?.status === 409) {
                 navigate("/shelves", {state: {message: "その本棚は既に追加されています。", type: "faild"}});
             }
+            if(error.response?.status === 422) {
+                navigate("/shelves", {state: {message: "本棚の追加に失敗しました。", type: "faild"}});
+            }
             if(error.response?.status === 500) {
                 navigate("/shelves", {state: {message: "本棚の追加に失敗しました。", type: "faild"}});
             }

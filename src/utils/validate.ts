@@ -14,3 +14,10 @@ export const isWithinInputRange = (value: string, maxLength: number): boolean =>
 
     return true;
 }
+
+
+export const isDate = (value: string): boolean => {
+    const dateValue = new Date(value);
+
+    return !isNaN(dateValue.getTime());
+}

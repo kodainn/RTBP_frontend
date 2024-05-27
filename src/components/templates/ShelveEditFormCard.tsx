@@ -60,6 +60,9 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
             if(error.response?.status === 409) {
                 navigate("/shelves", {state: {message: "その本棚名は別の本棚で使われています。", type: "faild"}});
             }
+            if(error.response?.status === 422) {
+                navigate("/shelves", {state: {message: "本棚の編集に失敗しました。", type: "faild"}});
+            }
             if(error.response?.status === 500) {
                 navigate("/shelves", {state: {message: "本棚の編集に失敗しました。", type: "faild"}});
             }
