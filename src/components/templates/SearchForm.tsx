@@ -23,6 +23,7 @@ const SearchForm: React.FC<Props> = ({changeSearchTitle}) => {
                 <InputField
                     onChange={changeSearchInput}
                     placeholder="書籍名で検索"
+                    value={searchInput}
                 />
             </div>
             <div className="mb-2">
