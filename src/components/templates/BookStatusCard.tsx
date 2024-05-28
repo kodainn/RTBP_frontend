@@ -4,21 +4,25 @@ type Props = {
     bookTotalCount: number,
     bookCountByShelve: {
         shelve_name: string,
-        book_count:  number
+        book_count: number
     }[]
 }
 
-const conversionToPieChartData = (bookCountShelve: {shelve_name: string, book_count: number}[]) => {
-    let data: any[]= [];
-    for(let index = 0; index < bookCountShelve.length; index++) {
+const conversionToPieChartData = (bookCountShelve: { shelve_name: string, book_count: number }[]) => {
+    let data: any[] = [];
+    for (let index = 0; index < bookCountShelve.length; index++) {
         data.push({
-            id:    index,
+            id: index,
             value: bookCountShelve[index].book_count,
             label: bookCountShelve[index].shelve_name
         });
     }
 
     return data;
+}
+
+const chartWidth = (bookCount: number) => {
+    return 100 + (300 * Math.ceil(bookCount / 6));
 }
 
 
@@ -45,14 +49,15 @@ const BookStatusCard: React.FC<Props> = ({ bookTotalCount, bookCountByShelve }) 
                             ) : (
                                 <PieChart
                                     series={[
-                                        {data: pieChartData},
+                                        { data: pieChartData },
                                     ]}
-                                    width={400}
+                                    width={chartWidth(bookCountByShelve.length)}
                                     height={200}
                                 />
                             )}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

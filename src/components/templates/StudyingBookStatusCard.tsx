@@ -4,15 +4,15 @@ import { format } from "date-fns";
 type Props = {
     studyBooksCompletedCount:  number,
     studyBooksIncompleteCount: number,
-    startStudyPeriodOn:        Date,
-    endStudyPeriodOn:          Date
+    startStudyPeriodOn:        string,
+    endStudyPeriodOn:          string
 }
 
 const studyComplatedPercent = (studyBooksCompletedCount: number, studyBooksIncompleteCount: number) => {
     if (studyBooksCompletedCount + studyBooksIncompleteCount === 0) {
         return 0;
     }
-    return studyBooksCompletedCount / (studyBooksCompletedCount + studyBooksIncompleteCount);
+    return Math.floor((studyBooksCompletedCount / (studyBooksCompletedCount + studyBooksIncompleteCount)) * 1000) / 1000;
 }
 
 const StudyingBookStatusCard: React.FC<Props> = ({
