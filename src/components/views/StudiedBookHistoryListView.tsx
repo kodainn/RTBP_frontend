@@ -28,18 +28,12 @@ const StudiedBookHistoryListView: React.FC = () => {
 
     const studiedBooksHistory = fetchStudiedBooksHistory();
 
-    if(studiedBooksHistory === null) {
-        return <div>loading...</div>;
-    }
-
-    if(studiedBooksHistory["studied_history_books"].length === 0) {
-        return <div>学習書籍履歴情報がありません。</div>;
-    }
-
     return (
         <div className="mt-24">
             <div className="flex flex-wrap">
-                {studiedBooksHistory["studied_history_books"].map((studiedBookHistory) => {
+                {studiedBooksHistory === null && <div>loading...</div>}
+                {studiedBooksHistory && studiedBooksHistory["studied_history_books"].length === 0 && <div>学習書籍履歴情報がありません。</div>}
+                {studiedBooksHistory && studiedBooksHistory["studied_history_books"].map((studiedBookHistory) => {
                     return (
                         <div key={studiedBookHistory.book_id} className="w-full sm:w-1/2 xl:w-1/3 p-4">
                             <StudiedBookHistoryCard
