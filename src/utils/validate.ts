@@ -1,3 +1,5 @@
+
+
 export const isRequired = (value: string): boolean => {
     if(value.length === 0) {
         return false;
@@ -20,4 +22,10 @@ export const isDate = (value: string): boolean => {
     const dateValue = new Date(value);
 
     return !isNaN(dateValue.getTime());
+}
+
+
+export const isTimeFormat = (value: string): boolean => {
+    const timeRegex = /^\d{2}:\d{2}$/;
+    return timeRegex.test(value);
 }

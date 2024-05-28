@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import StudyingBookCard from "../templates/StudyingBookCard";
 import axios from "axios";
+import SuccessAlertMessage from "../parts/SuccessAlertMessage";
+import FaildAlertMessage from "../parts/FaildAlertMessage";
+import { useLocation } from "react-router-dom";
 
 type StudyingBooksResponse = {
     studying_books: {
@@ -32,18 +35,18 @@ const StudyingBookListView: React.FC = () => {
 
     const studyingBooks = fetchStudyingBooks();
 
-    if(studyingBooks === null) {
-        return <div>loading...</div>;
-    }
-
-    if(studyingBooks["studying_books"].length === 0) {
-        return <div>学習書籍情報がありません。</div>;
-    }
+    const StudyingBookRecord = useLocation().state;
 
     return (
         <div className="mt-24">
+            <div className="w-[60%] mb-6">
+                {StudyingBookRecord !== null && StudyingBookRecord.type === "success" && <SuccessAlertMessage message={StudyingBookRecord.message} />}
+                {StudyingBookRecord !== null && StudyingBookRecord.type === "faild" && <FaildAlertMessage message={StudyingBookRecord.message} />}
+            </div>
             <div className="flex flex-wrap">
-                {studyingBooks["studying_books"].map((studyingBook) => {
+                {studyingBooks === null && <div>loading...</div>}
+                {studyingBooks && studyingBooks["studying_books"].length === 0 && <div>学習書籍情報がありません。</div>}
+                {studyingBooks && studyingBooks["studying_books"].map((studyingBook) => {
                     return (
                         <div key={studyingBook.id} className="w-full sm:w-1/2 xl:w-1/3 p-4">
                             <StudyingBookCard
