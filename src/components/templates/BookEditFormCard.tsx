@@ -47,7 +47,26 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
         return isValidate;
     }
 
-    const sendForm = (): void => {
+    const deleteSendForm = (id: number) => {
+        if(!confirm("削除してよろしいでしょうか?")) return ;
+
+        axios.delete(import.meta.env.VITE_API_URL + "/books/" + id)
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 204) {
+                navigate("/shelves", {state: {message: "書籍の削除が完了しました。", type: "success"}});
+            }
+        })
+        .catch((error: any) => {
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/shelves", {state: {message: "その書籍は既に削除されています。", type: "faild"}});
+            }
+            if(error.response?.status === 500) {
+                navigate("/shelves", {state: {message: "書籍の削除に失敗しました。", type: "faild"}});
+            }
+        });
+    }
+
+    const editSendForm = (id: number): void => {
         const isValidate = formValidate();
         if(isValidate) return;
 
@@ -56,8 +75,6 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
             remark:    remarkInput,
             img_url:   formImageUrl
         };
-
-        console.log(reqBody);
 
         axios.patch(import.meta.env.VITE_API_URL + "/books/" + id, reqBody)
         .then((res: AxiosResponse<any>) => {
@@ -127,7 +144,10 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
                 </div>
             </div>
             <div className="px-6 pb-2 pt-6 mb-8">
-                <Button isWeightFull={true} name="編集" onClick={sendForm} />
+            <div className="flex gap-4">
+                    <Button onClick={() => deleteSendForm(id)} isWeightFull={true} name="削除" />
+                    <Button onClick={() => editSendForm(id)} isWeightFull={true} name="編集" />
+                </div>
             </div>
         </div>
     );
