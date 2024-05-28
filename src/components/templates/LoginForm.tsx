@@ -1,11 +1,17 @@
+import { useLocation } from "react-router-dom";
 import Button from "../parts/Button";
 import InputField from "../parts/InputField"
 import Label from "../parts/Label";
 import LinkText from "../parts/LinkText";
+import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 
 const LoginForm: React.FC = () => {
+
+    const loginStatus = useLocation().state;
+
     return (
         <div className="w-full max-w-lg">
+            {loginStatus !== null && loginStatus.type === "success" && <SuccessAlertMessage message={loginStatus.message} />}
             <div className="flex flex-wrap -mx-3 mt-6 mb-6">
                 <div className="w-full px-3 mt-6 mb-6 md:mb-0">
                     <p className="text-2xl text-center">ログイン</p>
