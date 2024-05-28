@@ -90,7 +90,7 @@ const StudiedBookHistoryShowView: React.FC = () => {
                 </div>
                 {studiedHistoryBooks["studied_histories"].map((studiedHistoryBook) => {
                     return (
-                        <div className="flex justify-center mb-6 mt-6">
+                        <div key={studiedHistoryBook.id} className="flex justify-center mb-6 mt-6">
                             <div className="w-full">
                                 <StudiedBookHistoryDetailCard
                                     startOn={studiedHistoryBook.start_on}

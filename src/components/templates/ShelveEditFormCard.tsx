@@ -38,7 +38,26 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
         return isValidate;
     }
 
-    const sendForm = (id: string | number) => {
+    const deleteSendForm = (id: string | number) => {
+        if(!confirm("削除してよろしいでしょうか?")) return ;
+
+        axios.delete(import.meta.env.VITE_API_URL + "/shelves/" + id)
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 204) {
+                navigate("/shelves", {state: {message: "本棚の削除が完了しました。", type: "success"}});
+            }
+        })
+        .catch((error: any) => {
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/shelves", {state: {message: "その本棚は既に削除されています。", type: "faild"}});
+            }
+            if(error.response?.status === 500) {
+                navigate("/shelves", {state: {message: "本棚の削除に失敗しました。", type: "faild"}});
+            }
+        });
+    }
+
+    const editSendForm = (id: string | number) => {
         const isValidate = formValidate();
         if(isValidate) return;
 
@@ -78,7 +97,10 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
                 <ValidateText message={nameValidateMessage} />
             </div>
             <div className="px-6 pb-2 pt-6 mb-8">
-                <Button onClick={() => sendForm(id)} isWeightFull={true} name="編集" />
+                <div className="flex gap-4">
+                    <Button onClick={() => deleteSendForm(id)} isWeightFull={true} name="削除" />
+                    <Button onClick={() => editSendForm(id)} isWeightFull={true} name="編集" />
+                </div>
             </div>
         </div>
     );

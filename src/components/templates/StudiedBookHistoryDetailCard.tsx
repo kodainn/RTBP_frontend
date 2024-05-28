@@ -34,7 +34,7 @@ const StudiedBookHistoryDetailCard: React.FC<Props> = ({ startOn, targetOn, targ
                     <dd className="text-lg font-semibold">
                         {targetItems.map((targetItem) => {
                             return (
-                                <div className="flex">
+                                <div key={targetItem.id} className="flex">
                                     <div className="mr-3">
                                         <CheckBox isCheck={targetItem.is_completed} disabled={true} />
                                     </div>
