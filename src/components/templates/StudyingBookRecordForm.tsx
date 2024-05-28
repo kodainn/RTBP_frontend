@@ -109,7 +109,26 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
         return reqBody;
     }
 
-    const sendForm = () => {
+    const deleteSendForm = (id: number) => {
+        if(!confirm("削除してよろしいでしょうか?")) return ;
+
+        axios.delete(import.meta.env.VITE_API_URL + "/studying-books/" + id)
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 204) {
+                navigate("/studying-books", {state: {message: "学習書籍の削除が完了しました。", type: "success"}});
+            }
+        })
+        .catch((error: any) => {
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/studying-books", {state: {message: "その学習書籍は既に削除されています。", type: "faild"}});
+            }
+            if(error.response?.status === 500) {
+                navigate("/studying-books", {state: {message: "学習書籍の削除に失敗しました。", type: "faild"}});
+            }
+        });
+    }
+
+    const editSendForm = (id: number) => {
         const isValidate = formValidate();
         if(isValidate) return;
 
@@ -184,11 +203,11 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
                     </dd>
                 </div>
                 <div className="px-6 pb-2 pt-6 mb-8">
-                    <Button
-                        onClick={sendForm}
-                        isWeightFull={true}
-                        name={isCompleted ? "学習完了" : "記録" }
+                <div className="flex gap-4">
+                    <Button onClick={() => deleteSendForm(id)} isWeightFull={true} name="削除" />
+                    <Button onClick={() => editSendForm(id)} isWeightFull={true} name={isCompleted ? "学習完了" : "記録" }
                     />
+                </div>
                 </div>
             </dl>
         </div>
