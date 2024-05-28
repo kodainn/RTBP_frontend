@@ -1,6 +1,5 @@
 import LinkText from "../parts/LinkText";
 import ShelveEditFormCard from "../templates/ShelveEditFormCard";
-import { isNumber } from "../../utils/numberCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
