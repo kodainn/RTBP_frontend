@@ -4,21 +4,25 @@ type Props = {
     bookTotalCount: number,
     bookCountByShelve: {
         shelve_name: string,
-        book_count:  number
+        book_count: number
     }[]
 }
 
-const conversionToPieChartData = (bookCountShelve: {shelve_name: string, book_count: number}[]) => {
-    let data: any[]= [];
-    for(let index = 0; index < bookCountShelve.length; index++) {
+const conversionToPieChartData = (bookCountShelve: { shelve_name: string, book_count: number }[]) => {
+    let data: any[] = [];
+    for (let index = 0; index < bookCountShelve.length; index++) {
         data.push({
-            id:    index,
+            id: index,
             value: bookCountShelve[index].book_count,
             label: bookCountShelve[index].shelve_name
         });
     }
 
     return data;
+}
+
+const chartWidth = (bookCount: number) => {
+    return 100 + (300 * Math.ceil(bookCount / 6));
 }
 
 
@@ -37,19 +41,21 @@ const BookStatusCard: React.FC<Props> = ({ bookTotalCount, bookCountByShelve }) 
                             <h4 className="text-xl">{bookTotalCount}冊</h4>
                         </div>
                     </div>
-                    <div className="p-4">
+                    <div className="p-4 max-w-screen-lg overflow-x-auto">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">棚別書籍登録数</h3>
                         <div className="relative">
                             {bookCountByShelve.length === 0 ? (
                                 <div className="text-xl">書籍が登録されていません。</div>
                             ) : (
-                                <PieChart
-                                    series={[
-                                        {data: pieChartData},
-                                    ]}
-                                    width={400}
-                                    height={200}
-                                />
+                                <div className="overflow-x-auto">
+                                    <PieChart
+                                        series={[
+                                            { data: pieChartData },
+                                        ]}
+                                        width={chartWidth(bookCountByShelve.length)}
+                                        height={200}
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>
