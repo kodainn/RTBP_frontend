@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <Route path={"/studying-books"} element={<StudyingBookListPage />} />
           <Route path={"/studying-books/:id/record"} element={<StudyingBookRecordPage />} />
           <Route path={"/studied-history-books"} element={<StudiedBookHistoryListPage />} />
-          <Route path={"/studied-history-books/:id/show"} element={<StudiedBookHistoryShowPage />} />
+          <Route path={"/studied-history-books/:book_id/show"} element={<StudiedBookHistoryShowPage />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>

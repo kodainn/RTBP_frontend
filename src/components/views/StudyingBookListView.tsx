@@ -4,6 +4,7 @@ import axios from "axios";
 import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 import FaildAlertMessage from "../parts/FaildAlertMessage";
 import { useLocation } from "react-router-dom";
+import defaultBookImage from "../../assets/default_book.png";
 
 type StudyingBooksResponse = {
     studying_books: {
@@ -52,7 +53,7 @@ const StudyingBookListView: React.FC = () => {
                             <StudyingBookCard
                                 id={studyingBook.id}
                                 title={studyingBook.title}
-                                imgUrl={studyingBook.img_url}
+                                imgUrl={studyingBook.img_url ? studyingBook.img_url : defaultBookImage}
                                 startOn={studyingBook.start_on}
                                 targetOn={studyingBook.target_on}
                             />
