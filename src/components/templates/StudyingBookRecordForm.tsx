@@ -113,7 +113,7 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
         const isValidate = formValidate();
         if(isValidate) return;
 
-        const reqBody = createReqBody(targetItemsCheck, memo, studyTimeInput);
+        const reqBody = createReqBody(targetItemsCheck, memoInput, studyTimeInput);
 
         axios.post(import.meta.env.VITE_API_URL + "/studying-books/" + id + "/record", reqBody)
         .then((res: AxiosResponse<any>) => {

@@ -2,13 +2,13 @@ import Button from "../parts/Button";
 import InputField from "../parts/InputField";
 import InputTextArea from "../parts/InputTextArea";
 import Label from "../parts/Label";
-import defaultBookImage from "../../assets/default_book.png";
 import BookSearchDialog from "../dialog/BookSearchDialog";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { isRequired, isWithinInputRange } from "../../utils/validate";
 import ValidateText from "../parts/ValidateText";
+import defaultBookImage from "../../assets/default_book.png";
 
 type Props = {
     id:           number,

@@ -1,6 +1,6 @@
 import LinkText from "../parts/LinkText"
 import { format } from "date-fns";
-
+import defaultBookImage from "../../assets/default_book.png";
 
 type Props = {
     id:        number,
@@ -14,7 +14,7 @@ type Props = {
 const StudyingBookCard: React.FC<Props> = ({ id, title, imgUrl, startOn, targetOn }) => {
     return (
         <div className="bg-white rounded overflow-hidden shadow-lg flex">
-            <img className="w-1/2 h-48" src={imgUrl} alt="bookImage" />
+            <img className="w-1/2 h-48" src={imgUrl ? imgUrl : defaultBookImage} alt="bookImage" />
             <div className="px-6 py-4 flex flex-col justify-center">
                 <div className="font-bold text-xl mb-2">{title}</div>
                 <p className="text-gray-700 text-base">
