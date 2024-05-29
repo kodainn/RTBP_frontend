@@ -74,6 +74,9 @@ const LoginForm: React.FC = () => {
             if(error.response?.status === 404) {
                 navigate("/login", {state: {message: "ユーザー名またはパスワードが間違っています。", type: "faild"}});
             }
+            if(error.response?.status === 422 || error.response?.status === 500) {
+                navigate("/login", {state: {message: "ログインに失敗しました。", type: "faild"}});
+            }
         });
     }
 

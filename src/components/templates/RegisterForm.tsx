@@ -99,7 +99,9 @@ const RegisterForm: React.FC = () => {
             }
         })
         .catch((error: AxiosError<any>) => {
-            navigate("/register", {state: {message: "会員登録に失敗しました。", type: "faild"}});
+            if(error.response?.status === 422 || error.response?.status === 500) {
+                navigate("/register", {state: {message: "会員登録に失敗しました。", type: "faild"}});
+            }
         });
     }
 
