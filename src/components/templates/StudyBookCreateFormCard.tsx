@@ -4,8 +4,9 @@ import InputField from "../parts/InputField";
 import Label from "../parts/Label";
 import ValidateText from "../parts/ValidateText";
 import { isRequired, isWithinInputRange, isDate } from "../../utils/validate";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type Props = {
     book_id: number
@@ -14,6 +15,8 @@ type Props = {
 const StudyBookCreateFormCard: React.FC<Props> = ({ book_id }) => {
 
     const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
 
     const [ targetItems, setTargetItems ] = useState<string[]>([""]);
     const changeTargetItems = (index: number, event: ChangeEvent<HTMLInputElement>) => {
@@ -110,18 +113,22 @@ const StudyBookCreateFormCard: React.FC<Props> = ({ book_id }) => {
 
         const reqBody = createReqBody(book_id, targetItems, targetOnInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/studying-books", reqBody)
+        axios.post(import.meta.env.VITE_API_URL + "/studying-books", reqBody, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 navigate("/shelves", {state: {message: "学習書籍の追加に成功しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
-            if(error.response?.status === 404) {
-                navigate("/shelves", {state: {message: "その書籍の学習書籍は追加できません。", type: "faild"}});
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
             }
-            if(error.response?.status === 422) {
-                navigate("/shelves", {state: {message: "その本棚は既に追加されています。", type: "faild"}});
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/shelves", {state: {message: "その書籍の学習書籍は追加できません。", type: "faild"}});
             }
             if(error.response?.status === 500) {
                 navigate("/shelves", {state: {message: "本棚の追加に失敗しました。", type: "faild"}});

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import LinkText from "../parts/LinkText";
 import BookCreateFormCard from "../templates/BookCreateFormCard";
-import axios, { AxiosResponse } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type ShelveResponse = {
     id:   number,
@@ -10,41 +11,43 @@ type ShelveResponse = {
 }
 
 
-const fetchShelve = (id: string | undefined): ShelveResponse | null => {
+const fetchShelve = (id: string | undefined, accessToken: string, navigate: NavigateFunction): ShelveResponse | null => {
     const [ data, setData ] = useState<ShelveResponse | null>(null);
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        const fetchData = async() => {
-            await axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id)
-            .then((res: AxiosResponse) => {
-                if(res.status === 200) {
-                    setData(res.data);
-                }
-            })
-            .catch((error: any) => {
-                if(error.response?.status === 422) {
-                    navigate("/shelves");
-                }
-                if(error.response?.status === 404) {
-                    navigate("/shelves");
-                }
-                if(error.response?.status === 500) {
-                    navigate("/shelves");
-                }
-            });
-        }
-        fetchData();
+        axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/shelves");
+            }
+            if(error.response?.status === 500) {
+                navigate("/shelves");
+            }
+        });
     }, [])
 
     return data;
 }
 
 const BookCreateView: React.FC = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
 
-    const shelve = fetchShelve(id);
+    const shelve = fetchShelve(id, accessToken, navigate);
 
     if(shelve === null) {
         return <></>;

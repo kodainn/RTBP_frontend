@@ -4,12 +4,16 @@ import InputField from "../parts/InputField";
 import Label from "../parts/Label";
 import ValidateText from "../parts/ValidateText";
 import { isRequired, isWithinInputRange } from "../../utils/validate";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 
 const ShelveCreateFormCard: React.FC = () => {
     const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
     const [ nameInput, setNameInput ] = useState<string>("");
     const [ nameValidateMessage, setNameValidateMessage ] = useState<string>("");
 
@@ -33,21 +37,32 @@ const ShelveCreateFormCard: React.FC = () => {
         return isValidate;
     }
 
+    const createReqBody = (name: string): any => {
+        return {
+            name: name
+        }
+    }
+
     const sendForm = () => {
         const isValidate = formValidate();
         if(isValidate) return;
 
-        const reqBody = {
-            name: nameInput
-        };
+        const reqBody = createReqBody(nameInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/shelves", reqBody)
-        .then((res: AxiosResponse) => {
+        axios.post(import.meta.env.VITE_API_URL + "/shelves", reqBody, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 navigate("/shelves", {state: {message: "本棚の追加に成功しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
             if(error.response?.status === 409) {
                 navigate("/shelves", {state: {message: "その本棚は既に追加されています。", type: "faild"}});
             }

@@ -27,7 +27,7 @@ const StudiedBookHistoryDetailCard: React.FC<Props> = ({ startOn, targetOn, targ
             <dl className="max-w-md divide-y divide-gray-500 ml-6 mt-6 mb-6">
                 <div className="flex flex-col pb-3">
                     <dt className="mb-1 text-gray-700 md:text-lg">学習期間</dt>
-                    <dd className="text-lg font-semibold">{format(startOn, "yyyy年MM月dd日")}から{format(targetOn, "yyyy年MM月dd日")}まで</dd>
+                    <dd className="text-lg font-semibold">{startOn && targetOn && format(startOn, "yyyy年MM月dd日") + "から" + format(targetOn, "yyyy年MM月dd日") + "まで"}</dd>
                 </div>
                 <div className="flex flex-col py-3">
                     <dt className="mb-1 text-gray-500 md:text-lg">目標設定</dt>

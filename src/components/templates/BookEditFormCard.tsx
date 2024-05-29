@@ -3,12 +3,13 @@ import InputField from "../parts/InputField";
 import InputTextArea from "../parts/InputTextArea";
 import Label from "../parts/Label";
 import BookSearchDialog from "../dialog/BookSearchDialog";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { isRequired, isWithinInputRange } from "../../utils/validate";
 import ValidateText from "../parts/ValidateText";
 import defaultBookImage from "../../assets/default_book.png";
+import { useCookies } from "react-cookie";
 
 type Props = {
     id:           number,
@@ -21,6 +22,8 @@ type Props = {
 const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, imgUrl }) => {
 
     const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
 
     const [ titleInput, setTitleInput ] = useState<string>(title);
     const [ remarkInput, setRemarkInput ] = useState<string>(remark);
@@ -50,13 +53,20 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
     const deleteSendForm = (id: number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/books/" + id)
+        axios.delete(import.meta.env.VITE_API_URL + "/books/" + id, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 204) {
                 navigate("/shelves", {state: {message: "書籍の削除が完了しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
             if(error.response?.status === 404 || error.response?.status === 422) {
                 navigate("/shelves", {state: {message: "その書籍は既に削除されています。", type: "faild"}});
             }
@@ -76,21 +86,25 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
             img_url:   formImageUrl
         };
 
-        axios.patch(import.meta.env.VITE_API_URL + "/books/" + id, reqBody)
+        axios.patch(import.meta.env.VITE_API_URL + "/books/" + id, reqBody, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 navigate("/shelves", {state: {message: "書籍の編集に成功しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
-            if(error.response?.status === 404) {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+            if(error.response?.status === 404 || error.response?.status === 422) {
                 navigate("/shelves", {state: {message: "その本棚に書籍は編集できません。", type: "faild"}});
             }
             if(error.response?.status === 409) {
                 navigate("/shelves", {state: {message: "その書籍名は既に別の書籍で利用されています。", type: "faild"}});
-            }
-            if(error.response?.status === 422) {
-                navigate("/shelves", {state: {message: "書籍の編集に失敗しました。", type: "faild"}});
             }
             if(error.response?.status === 500) {
                 navigate("/shelves", {state: {message: "書籍の編集に失敗しました。", type: "faild"}});

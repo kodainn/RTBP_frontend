@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import StudiedBookHistoryCard from "../templates/StudiedBookHistoryCard";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type StudiedBooksHistoryResponse = {
     studied_history_books: {
@@ -11,14 +13,24 @@ type StudiedBooksHistoryResponse = {
     }[]
 };
 
-const fetchStudiedBooksHistory = (): StudiedBooksHistoryResponse | null => {
+const fetchStudiedBooksHistory = (accessToken: string, navigate: NavigateFunction): StudiedBooksHistoryResponse | null => {
     const [ data ,setData ] = useState<StudiedBooksHistoryResponse | null>(null);
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/studied-history-books");
-            setData(res.data);
-        };
-        fetchData();
+        axios.get(import.meta.env.VITE_API_URL + "/studied-history-books", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     });
 
     return data;
@@ -26,7 +38,11 @@ const fetchStudiedBooksHistory = (): StudiedBooksHistoryResponse | null => {
 
 const StudiedBookHistoryListView: React.FC = () => {
 
-    const studiedBooksHistory = fetchStudiedBooksHistory();
+    const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
+    const studiedBooksHistory = fetchStudiedBooksHistory(accessToken, navigate);
 
     return (
         <div className="mt-24">
