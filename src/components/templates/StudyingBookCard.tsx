@@ -18,8 +18,7 @@ const StudyingBookCard: React.FC<Props> = ({ id, title, imgUrl, startOn, targetO
             <div className="px-6 py-4 flex flex-col justify-center">
                 <div className="font-bold text-xl mb-2">{title}</div>
                 <p className="text-gray-700 text-base">
-                    {startOn && targetOn && format(startOn, "MM月dd日") + "から"}<br />
-                    {format(targetOn, "MM月dd日") + "まで"}
+                    {startOn && targetOn && format(startOn, "MM月dd日") + "から" + format(targetOn, "MM月dd日") + "まで"}
                 </p>
                 <div className="mr-2 ml-2 mt-2">
                     <LinkText
