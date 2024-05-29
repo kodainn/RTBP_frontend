@@ -23,7 +23,7 @@ const fetchSlevesIdBooksResponse = (id: string | undefined, accessToken: string,
     const [ data, setData ] = useState<shelvesIdBooksResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id + "/books", {
+        axios.get(process.env.VITE_API_URL + "/shelves/" + id + "/books", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

@@ -25,7 +25,7 @@ const fetchShelve = (searchTitle: string, accessToken: string, navigate: Navigat
     const [ data, setData ] = useState(null);
     useEffect(() => {
         setData(null);
-        axios.get(import.meta.env.VITE_API_URL + "/shelves?title=" + searchTitle, {
+        axios.get(process.env.VITE_API_URL + "/shelves?title=" + searchTitle, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

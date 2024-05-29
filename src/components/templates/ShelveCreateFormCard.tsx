@@ -49,7 +49,7 @@ const ShelveCreateFormCard: React.FC = () => {
 
         const reqBody = createReqBody(nameInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/shelves", reqBody, {
+        axios.post(process.env.VITE_API_URL + "/shelves", reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

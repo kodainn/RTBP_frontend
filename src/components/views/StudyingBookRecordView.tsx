@@ -33,7 +33,7 @@ const fetchStudyingBooks = (id: string | undefined, accessToken: string, navigat
     const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/studying-books/" + id, {
+        axios.get(process.env.VITE_API_URL + "/studying-books/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

@@ -113,7 +113,7 @@ const StudyBookCreateFormCard: React.FC<Props> = ({ book_id }) => {
 
         const reqBody = createReqBody(book_id, targetItems, targetOnInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/studying-books", reqBody, {
+        axios.post(process.env.VITE_API_URL + "/studying-books", reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

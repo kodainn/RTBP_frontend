@@ -19,7 +19,7 @@ const fetchBook = (id: string | undefined, accessToken: string, navigate: Naviga
     const [ data, setData ] = useState<BookResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/books/" + id, {
+        axios.get(process.env.VITE_API_URL + "/books/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

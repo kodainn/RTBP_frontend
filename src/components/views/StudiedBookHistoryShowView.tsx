@@ -34,7 +34,7 @@ const fetchStudiedHistoryBooks = (book_id: string | undefined, accessToken: stri
     const [ data, setData ] = useState<StudiedHistoryBooksResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/studied-history-books/" + book_id, {
+        axios.get(process.env.VITE_API_URL + "/studied-history-books/" + book_id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

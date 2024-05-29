@@ -20,7 +20,7 @@ type StudyingBooksResponse = {
 const fetchStudyingBooks = (accessToken: string, navigate: NavigateFunction): StudyingBooksResponse | null => {
     const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/studying-books", {
+        axios.get(process.env.VITE_API_URL + "/studying-books", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

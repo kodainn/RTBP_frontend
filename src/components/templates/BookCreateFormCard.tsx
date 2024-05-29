@@ -60,7 +60,7 @@ const BookCreateFormCard: React.FC<Props> = ({ id, name }) => {
             img_url:   imgUrl
         };
 
-        axios.post(import.meta.env.VITE_API_URL + "/books", reqBody, {
+        axios.post(process.env.VITE_API_URL + "/books", reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

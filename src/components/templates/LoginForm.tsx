@@ -63,7 +63,7 @@ const LoginForm: React.FC = () => {
 
         const reqBody = createReqBody(name, password);
 
-        axios.post(import.meta.env.VITE_API_URL + "/token", reqBody)
+        axios.post(process.env.VITE_API_URL + "/token", reqBody)
         .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 setCookies("access_token", res.data.access_token);

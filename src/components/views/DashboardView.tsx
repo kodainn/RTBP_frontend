@@ -36,7 +36,7 @@ const fetchStudyBookProgress = (accessToken: string, navigate: NavigateFunction)
     const [ data, setData ] = useState<StudyBookProgressResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-book-progress", {
+        axios.get(process.env.VITE_API_URL + "/dashboard/study-book-progress", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
@@ -60,7 +60,7 @@ const fetchStudyBookProgress = (accessToken: string, navigate: NavigateFunction)
 const fetchStudyTimes = (accessToken: string, navigate: NavigateFunction): StudyTimesResponse | null => {
     const [ data, setData ] = useState<StudyTimesResponse | null>(null);
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-times", {
+        axios.get(process.env.VITE_API_URL + "/dashboard/study-times", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
@@ -84,7 +84,7 @@ const fetchStudyTimes = (accessToken: string, navigate: NavigateFunction): Study
 const fetchBookCounts = (accessToken: string, navigate: NavigateFunction): BookCountsResponse | null => {
     const [ data, setData ] = useState<BookCountsResponse | null>(null);
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/dashboard/book-counts", {
+        axios.get(process.env.VITE_API_URL + "/dashboard/book-counts", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

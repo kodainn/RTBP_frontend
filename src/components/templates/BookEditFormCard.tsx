@@ -53,7 +53,7 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
     const deleteSendForm = (id: number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/books/" + id, {
+        axios.delete(process.env.VITE_API_URL + "/books/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
@@ -86,7 +86,7 @@ const BookEditFormCard: React.FC<Props> = ({ id, shelvesName, title, remark, img
             img_url:   formImageUrl
         };
 
-        axios.patch(import.meta.env.VITE_API_URL + "/books/" + id, reqBody, {
+        axios.patch(process.env.VITE_API_URL + "/books/" + id, reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

@@ -16,7 +16,7 @@ type StudiedBooksHistoryResponse = {
 const fetchStudiedBooksHistory = (accessToken: string, navigate: NavigateFunction): StudiedBooksHistoryResponse | null => {
     const [ data ,setData ] = useState<StudiedBooksHistoryResponse | null>(null);
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/studied-history-books", {
+        axios.get(process.env.VITE_API_URL + "/studied-history-books", {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

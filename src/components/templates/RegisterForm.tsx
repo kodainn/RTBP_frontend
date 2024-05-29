@@ -92,7 +92,7 @@ const RegisterForm: React.FC = () => {
 
         const reqBody = createReqBody(name, email, password);
 
-        axios.post(import.meta.env.VITE_API_URL + "/register", reqBody)
+        axios.post(process.env.VITE_API_URL + "/register", reqBody)
         .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 navigate("/login", {state: {message: "会員登録が完了しました。", type: "success"}});

@@ -115,7 +115,7 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
     const deleteSendForm = (id: number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/studying-books/" + id, {
+        axios.delete(process.env.VITE_API_URL + "/studying-books/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
@@ -144,7 +144,7 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
 
         const reqBody = createReqBody(targetItemsCheck, memoInput, studyTimeInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/studying-books/" + id + "/record", reqBody, {
+        axios.post(process.env.VITE_API_URL + "/studying-books/" + id + "/record", reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

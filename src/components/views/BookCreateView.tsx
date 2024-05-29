@@ -15,7 +15,7 @@ const fetchShelve = (id: string | undefined, accessToken: string, navigate: Navi
     const [ data, setData ] = useState<ShelveResponse | null>(null);
 
     useEffect(() => {
-        axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id, {
+        axios.get(process.env.VITE_API_URL + "/shelves/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }

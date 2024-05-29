@@ -45,7 +45,7 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
     const deleteSendForm = (id: string | number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/shelves/" + id, {
+        axios.delete(process.env.VITE_API_URL + "/shelves/" + id, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
@@ -76,7 +76,7 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
             name: nameInput
         };
 
-        axios.patch(import.meta.env.VITE_API_URL + "/shelves/" + id, reqBody, {
+        axios.patch(process.env.VITE_API_URL + "/shelves/" + id, reqBody, {
             headers: {
                 "Authorization": "Bearer " + accessToken
             }
