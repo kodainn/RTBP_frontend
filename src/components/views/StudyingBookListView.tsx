@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import StudyingBookCard from "../templates/StudyingBookCard";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 import FaildAlertMessage from "../parts/FaildAlertMessage";
-import { useLocation } from "react-router-dom";
+import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type StudyingBooksResponse = {
     studying_books: {
@@ -16,16 +17,24 @@ type StudyingBooksResponse = {
 };
 
 
-const fetchStudyingBooks = (): StudyingBooksResponse | null => {
+const fetchStudyingBooks = (accessToken: string, navigate: NavigateFunction): StudyingBooksResponse | null => {
     const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/studying-books");
+        axios.get(import.meta.env.VITE_API_URL + "/studying-books", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 setData(res.data);
             }
-        };
-        fetchData();
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     }, []);
 
     return data;
@@ -33,7 +42,11 @@ const fetchStudyingBooks = (): StudyingBooksResponse | null => {
 
 const StudyingBookListView: React.FC = () => {
 
-    const studyingBooks = fetchStudyingBooks();
+    const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
+    const studyingBooks = fetchStudyingBooks(accessToken, navigate);
 
     const StudyingBookRecord = useLocation().state;
 

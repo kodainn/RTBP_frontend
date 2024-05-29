@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { NavigateFunction, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 import LinkText from "../parts/LinkText";
 import BookCard from "../templates/BookCard";
+import { useCookies } from "react-cookie";
 
 
 type shelvesIdBooksResponse = {
@@ -18,29 +19,29 @@ type shelvesIdBooksResponse = {
 };
 
 
-const fetchSlevesIdBooksResponse = (id: string | undefined): shelvesIdBooksResponse | null => {
+const fetchSlevesIdBooksResponse = (id: string | undefined, accessToken: string, navigate: NavigateFunction): shelvesIdBooksResponse | null => {
     const [ data, setData ] = useState<shelvesIdBooksResponse | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async() => {
-            await axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id + "/books")
-            .then((res: AxiosResponse) => {
-                if(res.status === 200) {
-                    setData(res.data);
-                }
-            })
-            .catch((error: any) => {
-                if(error.response?.status === 422) {
-                    navigate("/shelves");
-                }
-                if(error.response?.status === 404) {
-                    navigate("/shelves");
-                };
-            });
-        }
-        fetchData();
-    }, [])
+        axios.get(import.meta.env.VITE_API_URL + "/shelves/" + id + "/books", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+            if(error.response?.status === 422 || error.response?.status === 404) {
+                navigate("/shelves");
+            }
+        });
+    }, []);
 
     return data;
 }
@@ -48,7 +49,11 @@ const fetchSlevesIdBooksResponse = (id: string | undefined): shelvesIdBooksRespo
 
 const BookListView: React.FC = () => {
     const { id } = useParams();
-    const shelvesIdBooks = fetchSlevesIdBooksResponse(id);
+    const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
+    const shelvesIdBooks = fetchSlevesIdBooksResponse(id, accessToken, navigate);
 
     if(shelvesIdBooks === null) {
         return <div>loading...</div>;

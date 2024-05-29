@@ -4,8 +4,9 @@ import InputField from "../parts/InputField";
 import Label from "../parts/Label";
 import { useNavigate } from "react-router-dom";
 import { isRequired, isWithinInputRange } from "../../utils/validate";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import ValidateText from "../parts/ValidateText";
+import { useCookies } from "react-cookie";
 
 type Props = {
     id:   number | string,
@@ -15,6 +16,9 @@ type Props = {
 const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
 
     const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
     const [ nameInput, setNameInput ] = useState<string>(name);
     const [ nameValidateMessage, setNameValidateMessage ] = useState<string>("");
 
@@ -41,13 +45,20 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
     const deleteSendForm = (id: string | number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/shelves/" + id)
+        axios.delete(import.meta.env.VITE_API_URL + "/shelves/" + id, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 204) {
                 navigate("/shelves", {state: {message: "本棚の削除が完了しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
             if(error.response?.status === 404 || error.response?.status === 422) {
                 navigate("/shelves", {state: {message: "その本棚は既に削除されています。", type: "faild"}});
             }
@@ -65,22 +76,25 @@ const ShelveEditFormCard: React.FC<Props> = ({ id, name }) => {
             name: nameInput
         };
 
-        axios.patch(import.meta.env.VITE_API_URL + "/shelves/" + id, reqBody)
-        .then((res: AxiosResponse) => {
-            if(res.status === 200) {
-                navigate("/shelves", {state: {message: "本棚の編集に成功しました。", type: "success"}});
+        axios.patch(import.meta.env.VITE_API_URL + "/shelves/" + id, reqBody, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
             }
         })
-        .catch((error: any) => {
-            console.log(error.response);
-            if(error.response?.status === 404) {
+        .then((res: AxiosResponse<any>) => {
+            if(res.status === 200) {
+                navigate("/shelves", {state: {message: "本棚を編集しました。", type: "success"}});
+            }
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+            if(error.response?.status === 404 || error.response?.status === 422) {
                 navigate("/shelves", {state: {message: "所有していない本棚は編集できません。", type: "faild"}});
             }
             if(error.response?.status === 409) {
                 navigate("/shelves", {state: {message: "その本棚名は別の本棚で使われています。", type: "faild"}});
-            }
-            if(error.response?.status === 422) {
-                navigate("/shelves", {state: {message: "本棚の編集に失敗しました。", type: "faild"}});
             }
             if(error.response?.status === 500) {
                 navigate("/shelves", {state: {message: "本棚の編集に失敗しました。", type: "faild"}});

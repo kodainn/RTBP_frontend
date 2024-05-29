@@ -7,8 +7,9 @@ import { format } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 import { isRequired, isWithinInputRange, isTimeFormat } from "../../utils/validate";
 import ValidateText from "../parts/ValidateText";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 
 type Props = {
@@ -27,6 +28,8 @@ type Props = {
 const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, targetItems }) => {
 
     const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
 
     const initTargetItems = targetItems;
 
@@ -112,13 +115,20 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
     const deleteSendForm = (id: number) => {
         if(!confirm("削除してよろしいでしょうか?")) return ;
 
-        axios.delete(import.meta.env.VITE_API_URL + "/studying-books/" + id)
+        axios.delete(import.meta.env.VITE_API_URL + "/studying-books/" + id, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 204) {
                 navigate("/studying-books", {state: {message: "学習書籍の削除が完了しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
             if(error.response?.status === 404 || error.response?.status === 422) {
                 navigate("/studying-books", {state: {message: "その学習書籍は既に削除されています。", type: "faild"}});
             }
@@ -134,13 +144,20 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
 
         const reqBody = createReqBody(targetItemsCheck, memoInput, studyTimeInput);
 
-        axios.post(import.meta.env.VITE_API_URL + "/studying-books/" + id + "/record", reqBody)
+        axios.post(import.meta.env.VITE_API_URL + "/studying-books/" + id + "/record", reqBody, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
         .then((res: AxiosResponse<any>) => {
             if(res.status === 201) {
                 navigate("/studying-books", {state: {message: "記録しました。", type: "success"}});
             }
         })
-        .catch((error: any) => {
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
             if(error.response?.status === 404) {
                 navigate("/studying-books", {state: {message: "記録するための学習書籍が見つかりませんでした。", type: "faild"}});
             }
@@ -158,7 +175,7 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
             <dl className="max-w-md divide-y divide-gray-500 ml-6 mt-6 mb-6">
                 <div className="flex flex-col pb-3">
                     <dt className="mb-1 text-gray-700 md:text-lg">学習期限</dt>
-                    <dd className="text-lg font-semibold">{format(startOn, "yyyy年MM月dd日")}から{format(targetOn, "yyyy年MM月dd日")}まで</dd>
+                    <dd className="text-lg font-semibold">{startOn && targetOn && format(startOn, "yyyy年MM月dd日") + "から" + format(targetOn, "yyyy年MM月dd日") + "まで"}</dd>
                 </div>
                 <div className="flex flex-col py-3">
                     <dt className="mb-1 text-gray-500 md:text-lg">目標設定</dt>

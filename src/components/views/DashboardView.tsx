@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 import BookStatusCard from "../templates/BookStatusCard";
 import StudyingBookStatusCard from "../templates/StudyingBookStatusCard";
 import StudyingStatusCard from "../templates/StudyingStatusCard";
 import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 import { useCookies } from "react-cookie";
-import { useLocation } from "react-router-dom";
+import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 
 type StudyBookProgressResponse = {
     study_books_completed_count:  number,
@@ -32,49 +32,73 @@ type BookCountsResponse = {
     }[]
 };
 
-const fetchStudyBookProgress = (): StudyBookProgressResponse | null => {
+const fetchStudyBookProgress = (accessToken: string, navigate: NavigateFunction): StudyBookProgressResponse | null => {
     const [ data, setData ] = useState<StudyBookProgressResponse | null>(null);
 
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-book-progress");
+        axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-book-progress", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 setData(res.data);
             }
-        }
-        fetchData();
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     }, [])
 
     return data;
 }
 
 
-const fetchStudyTimes = (): StudyTimesResponse | null => {
+const fetchStudyTimes = (accessToken: string, navigate: NavigateFunction): StudyTimesResponse | null => {
     const [ data, setData ] = useState<StudyTimesResponse | null>(null);
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-times");
+        axios.get(import.meta.env.VITE_API_URL + "/dashboard/study-times", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 setData(res.data);
             }
-        }
-        fetchData();
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     }, []);
 
     return data;
 }
 
 
-const fetchBookCounts = (): BookCountsResponse | null => {
+const fetchBookCounts = (accessToken: string, navigate: NavigateFunction): BookCountsResponse | null => {
     const [ data, setData ] = useState<BookCountsResponse | null>(null);
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/dashboard/book-counts");
+        axios.get(import.meta.env.VITE_API_URL + "/dashboard/book-counts", {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 setData(res.data);
             }
-        }
-        fetchData();
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     }, []);
 
     return data;
@@ -83,11 +107,14 @@ const fetchBookCounts = (): BookCountsResponse | null => {
 
 const DashboardView: React.FC = () => {
 
-    const StudyBookProgress = fetchStudyBookProgress();
-    const StudyTimes = fetchStudyTimes();
-    const BookCounts = fetchBookCounts();
+    const navigate = useNavigate();
 
     const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
+    const StudyBookProgress = fetchStudyBookProgress(accessToken, navigate);
+    const StudyTimes = fetchStudyTimes(accessToken, navigate);
+    const BookCounts = fetchBookCounts(accessToken, navigate);
 
     const dashboardStatus = useLocation().state;
 

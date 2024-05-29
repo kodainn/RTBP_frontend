@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import LinkButton from "../parts/LinkButton";
 import SearchForm from "../templates/SearchForm";
 import SheveInBookCard from "../templates/SheveInBookCard";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 import FaildAlertMessage from "../parts/FaildAlertMessage";
-import { useLocation } from "react-router-dom";
+import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 
 type ShelveResponse = {
@@ -20,17 +21,25 @@ type ShelveResponse = {
     }[];
 };
 
-const fetchShelve = (searchTitle: string): ShelveResponse | null => {
+const fetchShelve = (searchTitle: string, accessToken: string, navigate: NavigateFunction): ShelveResponse | null => {
     const [ data, setData ] = useState(null);
     useEffect(() => {
         setData(null);
-        const fetchData = async() => {
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/shelves?title=" + searchTitle);
+        axios.get(import.meta.env.VITE_API_URL + "/shelves?title=" + searchTitle, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res: AxiosResponse<any>) => {
             if(res.status === 200) {
                 setData(res.data);
             }
-        }
-        fetchData();
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+        });
     }, [searchTitle]);
 
     return data;
@@ -45,7 +54,11 @@ const SheveListView: React.FC = () => {
         setSearchTitle(searchTitle);
     }
 
-    const shelves = fetchShelve(searchTitle);
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+    const navigate = useNavigate();
+
+    const shelves = fetchShelve(searchTitle, accessToken, navigate);
 
     const shelveCreateOrEdit = useLocation().state;
 

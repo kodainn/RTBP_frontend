@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import LinkText from "../parts/LinkText";
 import BookDetailCard from "../templates/BookDetailCard";
 import StudyingBookRecordForm from "../templates/StudyingBookRecordForm";
-import axios, { AxiosResponse } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type StudyingBooksResponse = {
     book: {
@@ -27,32 +28,32 @@ type StudyingBooksResponse = {
 };
 
 
-const fetchStudyingBooks = (id: string | undefined): StudyingBooksResponse | null => {
-    const navigate = useNavigate();
+const fetchStudyingBooks = (id: string | undefined, accessToken: string, navigate: NavigateFunction): StudyingBooksResponse | null => {
 
     const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
 
     useEffect(() => {
-        const fetchData = async(id: string | undefined) => {
-            axios.get(import.meta.env.VITE_API_URL + "/studying-books/" + id)
-            .then((res:AxiosResponse<StudyingBooksResponse>) => {
-                if(res.status === 200) {
-                    setData(res.data);
-                }
-            })
-            .catch((error: any) => {
-                if(error.response?.status === 404) {
-                    navigate("/studying-books");
-                }
-                if(error.response?.status === 422) {
-                    navigate("/studying-books");
-                }
-                if(error.response?.status === 500) {
-                    navigate("/studying-books");
-                }
-            });
-        }
-        fetchData(id);
+        axios.get(import.meta.env.VITE_API_URL + "/studying-books/" + id, {
+            headers: {
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((res:AxiosResponse<any>) => {
+            if(res.status === 200) {
+                setData(res.data);
+            }
+        })
+        .catch((error: AxiosError<any>) => {
+            if(error.response?.status === 401) {
+                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
+            }
+            if(error.response?.status === 404 || error.response?.status === 422) {
+                navigate("/studying-books");
+            }
+            if(error.response?.status === 500) {
+                navigate("/studying-books");
+            }
+        });
     }, []);
 
     return data;
@@ -61,7 +62,11 @@ const fetchStudyingBooks = (id: string | undefined): StudyingBooksResponse | nul
 
 const StudyingBookRecordView: React.FC = () => {
     const { id } = useParams();
-    const studyingBooks = fetchStudyingBooks(id);
+    const navigate = useNavigate();
+    const [ cookies ] = useCookies();
+    const accessToken = cookies.access_token;
+
+    const studyingBooks = fetchStudyingBooks(id, accessToken, navigate);
 
     if(studyingBooks === null) {
         return <></>;

@@ -25,7 +25,7 @@ const StudyingBookStatusCard: React.FC<Props> = ({
         <div className="w-full bg-white rounded-lg overflow-hidden shadow-xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-transparent opacity-50">
                 <div className="text-lg font-semibold text-gray-800 mb-4">
-                    { format(startStudyPeriodOn, 'yyyy年MM月dd日') + "から" + format(endStudyPeriodOn, 'yyyy年MM月dd日') }
+                    { startStudyPeriodOn && endStudyPeriodOn && format(startStudyPeriodOn, 'yyyy年MM月dd日') + "から" + format(endStudyPeriodOn, 'yyyy年MM月dd日') + "まで" }
                 </div>
             </div>
             <div className="px-4 py-2">
