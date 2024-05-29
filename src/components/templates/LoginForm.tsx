@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
         })
         .catch((error: AxiosError<any>) => {
             if(error.response?.status === 404) {
-                navigate("/login", {state: {message: "ログインに失敗しました。", type: "faild"}});
+                navigate("/login", {state: {message: "ユーザー名またはパスワードが間違っています。", type: "faild"}});
             }
         });
     }
