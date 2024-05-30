@@ -31,9 +31,9 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const initTargetItems = targetItems;
-
     const [targetItemsCheck, setTargetItemsCheck] = useState<Props["targetItems"]>(targetItems);
+
+
     const changeTargetItemsCheck = (index: number, event: ChangeEvent<HTMLInputElement>): void => {
         const newTargetItemsCheck = [...targetItemsCheck];
         newTargetItemsCheck[index]["is_completed"] = event.target.checked;
@@ -187,7 +187,7 @@ const StudyingBookRecordForm: React.FC<Props> = ({ id, startOn, targetOn, memo, 
                                         <CheckBox
                                             onChange={(event: ChangeEvent<HTMLInputElement>) => changeTargetItemsCheck(index, event)}
                                             isCheck={targetItem.is_completed}
-                                            disabled={initTargetItems[index]["is_completed"]}
+                                            disabled={targetItems[index]["is_completed"]}
                                         />
                                     </div>
                                     <div>
