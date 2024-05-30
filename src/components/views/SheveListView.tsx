@@ -50,8 +50,12 @@ const SheveListView: React.FC = () => {
 
     const [searchTitle, setSearchTitle] = useState<string>("");
 
-    const changeSearchTitle = (searchTitle: string) => {
+    const changeSearchTitle = (searchTitle: string): void => {
         setSearchTitle(searchTitle);
+    }
+
+    const resetSearchTitle = (): void => {
+        setSearchTitle("");
     }
 
     const [ cookies ] = useCookies();
@@ -67,6 +71,7 @@ const SheveListView: React.FC = () => {
             <div className="mr-12">
                 <SearchForm
                     changeSearchTitle={changeSearchTitle}
+                    resetSearch={resetSearchTitle}
                 />
             </div>
             <div className="w-[60%]">
