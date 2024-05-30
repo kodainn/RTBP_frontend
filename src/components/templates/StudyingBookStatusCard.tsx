@@ -12,7 +12,7 @@ const studyComplatedPercent = (studyBooksCompletedCount: number, studyBooksIncom
     if (studyBooksCompletedCount + studyBooksIncompleteCount === 0) {
         return 0;
     }
-    return Math.floor((studyBooksCompletedCount / (studyBooksCompletedCount + studyBooksIncompleteCount)) * 1000) / 1000;
+    return Math.floor((studyBooksCompletedCount / (studyBooksCompletedCount + studyBooksIncompleteCount)) * 1000) / 1000 * 100;
 }
 
 const StudyingBookStatusCard: React.FC<Props> = ({
