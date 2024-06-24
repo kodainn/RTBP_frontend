@@ -1,52 +1,16 @@
-import { useEffect, useState } from "react";
 import StudyingBookCard from "../templates/StudyingBookCard";
-import axios, { AxiosError, AxiosResponse } from "axios";
 import SuccessAlertMessage from "../parts/SuccessAlertMessage";
 import FaildAlertMessage from "../parts/FaildAlertMessage";
-import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-type StudyingBooksResponse = {
-    studying_books: {
-        id:        number,
-        title:     string,
-        img_url:   string,
-        start_on:  Date,
-        target_on: Date
-    }[];
-};
-
-
-const fetchStudyingBooks = (accessToken: string, navigate: NavigateFunction): StudyingBooksResponse | null => {
-    const [ data, setData ] = useState<StudyingBooksResponse | null>(null);
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/studying-books", {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse<any>) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: AxiosError<any>) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-        });
-    }, []);
-
-    return data;
-}
+import { useFetchStudyingBooks } from "../../hooks/useFetchStudyingBooks";
 
 const StudyingBookListView: React.FC = () => {
 
-    const navigate = useNavigate();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const studyingBooks = fetchStudyingBooks(accessToken, navigate);
+    const studyingBooks = useFetchStudyingBooks(accessToken);
 
     const StudyingBookRecord = useLocation().state;
 

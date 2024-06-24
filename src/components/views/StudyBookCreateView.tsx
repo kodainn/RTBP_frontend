@@ -1,57 +1,18 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
 import LinkText from "../parts/LinkText";
 import BookDetailCard from "../templates/BookDetailCard";
 import StudyBookCreateFormCard from "../templates/StudyBookCreateFormCard";
-import { useEffect, useState } from "react";
-import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useFetchBook } from "../../hooks/useFetchBook";
 
-type BookResponse = {
-    id:          number,
-    shelve_name: string,
-    title:       string,
-    remark:      string,
-    img_url:     string
-}
-
-const fetchBook = (id: string | undefined, accessToken: string, navigate: NavigateFunction): BookResponse | null => {
-
-    const [ data, setData ] = useState<BookResponse | null>(null);
-
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/books/" + id, {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse<any>) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: AxiosError<any>) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-            if(error.response?.status === 404 || error.response?.status === 422) {
-                navigate("/shelves");
-            }
-            if(error.response?.status === 500) {
-                navigate("/shelves");
-            }
-        });
-    }, []);
-
-    return data;
-}
 
 const StudyBookCreateView: React.FC = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const book = fetchBook(id, accessToken, navigate);
+    const book = useFetchBook(id, accessToken);
+    console.log(book);
 
     if(book === null) {
         return <></>;

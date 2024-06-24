@@ -1,53 +1,15 @@
-import { useEffect, useState } from "react";
 import LinkText from "../parts/LinkText";
 import BookCreateFormCard from "../templates/BookCreateFormCard";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-type ShelveResponse = {
-    id:   number,
-    name: string
-}
-
-
-const fetchShelve = (id: string | undefined, accessToken: string, navigate: NavigateFunction): ShelveResponse | null => {
-    const [ data, setData ] = useState<ShelveResponse | null>(null);
-
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/shelves/" + id, {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse<any>) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: AxiosError<any>) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-            if(error.response?.status === 404 || error.response?.status === 422) {
-                navigate("/shelves");
-            }
-            if(error.response?.status === 500) {
-                navigate("/shelves");
-            }
-        });
-    }, [])
-
-    return data;
-}
+import { useFetchShelve } from "../../hooks/useFetchShelve";
 
 const BookCreateView: React.FC = () => {
-    const navigate = useNavigate();
     const { id } = useParams();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const shelve = fetchShelve(id, accessToken, navigate);
+    const shelve = useFetchShelve(id, accessToken);
 
     if(shelve === null) {
         return <></>;

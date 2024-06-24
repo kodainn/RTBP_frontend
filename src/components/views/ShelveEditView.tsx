@@ -1,52 +1,16 @@
 import LinkText from "../parts/LinkText";
 import ShelveEditFormCard from "../templates/ShelveEditFormCard";
-import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-type ShelveResponse = {
-    id:   number,
-    name: string
-}
-
-
-const fetchShelve = (id: string | undefined, accessToken: string, navigate: NavigateFunction): ShelveResponse | null => {
-    const [ data, setData ] = useState<ShelveResponse | null>(null);
-
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/shelves/" + id, {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: any) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-            if(error.response?.status === 404 || error.response?.status === 422) {
-                navigate("/shelves");
-            }
-        });
-    }, [])
-
-    return data;
-}
-
+import { useFetchShelve } from "../../hooks/useFetchShelve";
 
 const ShelveEditView: React.FC = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const shelve = fetchShelve(id, accessToken, navigate);
+    const shelve = useFetchShelve(id, accessToken);
 
     if(shelve === null) {
         return <></>;

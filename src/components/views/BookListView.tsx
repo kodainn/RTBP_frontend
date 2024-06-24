@@ -1,59 +1,19 @@
-import { useState, useEffect } from "react";
-import { NavigateFunction, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import axios, { AxiosError, AxiosResponse } from "axios";
-
+import { useParams } from "react-router-dom";
 import LinkText from "../parts/LinkText";
 import BookCard from "../templates/BookCard";
 import { useCookies } from "react-cookie";
+import { useFetchSlevesIdBooks } from "../../hooks/useFetchSlevesIdBooks";
 
 
-type shelvesIdBooksResponse = {
-    id:   number,
-    name: string,
-    books: {
-        id:      number,
-        title:   string,
-        img_url: string
-    }[];
-};
 
-
-const fetchSlevesIdBooksResponse = (id: string | undefined, accessToken: string, navigate: NavigateFunction): shelvesIdBooksResponse | null => {
-    const [ data, setData ] = useState<shelvesIdBooksResponse | null>(null);
-
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/shelves/" + id + "/books", {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse<any>) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: AxiosError<any>) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-            if(error.response?.status === 422 || error.response?.status === 404) {
-                navigate("/shelves");
-            }
-        });
-    }, []);
-
-    return data;
-}
 
 
 const BookListView: React.FC = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const shelvesIdBooks = fetchSlevesIdBooksResponse(id, accessToken, navigate);
+    const shelvesIdBooks = useFetchSlevesIdBooks(id, accessToken);
 
     if(shelvesIdBooks === null) {
         return <div>loading...</div>;

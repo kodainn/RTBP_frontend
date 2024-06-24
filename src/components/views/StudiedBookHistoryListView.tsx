@@ -1,48 +1,15 @@
-import { useEffect, useState } from "react";
+import { useFetchStudiedBooksHistory } from "../../hooks/useFetchStudiedBooksHistory";
 import StudiedBookHistoryCard from "../templates/StudiedBookHistoryCard";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-type StudiedBooksHistoryResponse = {
-    studied_history_books: {
-        book_id:       number,
-        title:         string,
-        img_url:       string,
-        studied_count: number
-    }[]
-};
 
-const fetchStudiedBooksHistory = (accessToken: string, navigate: NavigateFunction): StudiedBooksHistoryResponse | null => {
-    const [ data ,setData ] = useState<StudiedBooksHistoryResponse | null>(null);
-    useEffect(() => {
-        axios.get(process.env.VITE_API_URL + "/studied-history-books", {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((res: AxiosResponse<any>) => {
-            if(res.status === 200) {
-                setData(res.data);
-            }
-        })
-        .catch((error: AxiosError<any>) => {
-            if(error.response?.status === 401) {
-                navigate("/login", {state: {message: "ログインしてください。", type: "faild"}});
-            }
-        });
-    });
-
-    return data;
-}
 
 const StudiedBookHistoryListView: React.FC = () => {
 
-    const navigate = useNavigate();
     const [ cookies ] = useCookies();
     const accessToken = cookies.access_token;
 
-    const studiedBooksHistory = fetchStudiedBooksHistory(accessToken, navigate);
+    const studiedBooksHistory = useFetchStudiedBooksHistory(accessToken);
 
     return (
         <div className="mt-24">
